@@ -1,0 +1,46 @@
+#ifndef PREDATORSIMULATOR_H
+#define PREDATORSIMULATOR_H
+
+#include <QtWidgets/QMainWindow>
+#include "ui_PredatorSimulator.h"
+
+#include <QGraphicsScene>
+#include <QTimer>
+
+class QGraphicsView;
+class QControlBar;
+class QParameters;
+
+class PredatorSimulator : public QMainWindow
+{
+	Q_OBJECT
+
+public:
+	PredatorSimulator(QWidget *parent = Q_NULLPTR);
+
+private:
+	Ui::PredatorSimulatorClass ui;
+
+	QGraphicsScene mGraphicsScene;
+	QGraphicsView * mSimulationView;
+	QParameters * mParameters;
+	QControlBar * mControlBar;
+
+	QTimer mTimer;
+
+	static const size_t sMaxNbrOfItems;
+	static const QSize sSceneSize;
+	static const QColor sSceneBackgroundColor;
+
+private slots:
+	void startSimulation();
+	void stepSimulation();
+	void pauseSimulation();
+	void resumeSimulation();
+	void stopSimulation();
+
+};
+
+#endif // !PREDATORSIMULATOR_H
+
+
