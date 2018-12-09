@@ -1,5 +1,5 @@
-#ifndef PREDATORSIMULATOR_H
-#define PREDATORSIMULATOR_H
+#ifndef PREDATOR_SIMULATOR_H
+#define PREDATOR_SIMULATOR_H
 
 #include <QtWidgets/QMainWindow>
 #include "ui_PredatorSimulator.h"
@@ -41,6 +41,6 @@ private slots:
 
 };
 
-#endif // !PREDATORSIMULATOR_H
+#endif // !PREDATOR_SIMULATOR_H
 
 

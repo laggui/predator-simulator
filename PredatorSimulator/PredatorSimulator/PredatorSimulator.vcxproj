@@ -115,9 +115,17 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PredatorSimulator.cpp" />
+    <ClCompile Include="QBasicItem.cpp" />
+    <ClCompile Include="QCloningZone.cpp" />
     <ClCompile Include="QColorBox.cpp" />
     <ClCompile Include="QControlBar.cpp" />
+    <ClCompile Include="QDynamicObject.cpp" />
     <ClCompile Include="QParameters.cpp" />
+    <ClCompile Include="QPredator.cpp" />
+    <ClCompile Include="QRunner.cpp" />
+    <ClCompile Include="QStaticObject.cpp" />
+    <ClCompile Include="QSuicideBomber.cpp" />
+    <ClCompile Include="QWall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="PredatorSimulator.h" />
@@ -129,7 +137,15 @@
     <QtRcc Include="PredatorSimulator.qrc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="QBasicItem.h" />
+    <ClInclude Include="QCloningZone.h" />
     <ClInclude Include="QColorBox.h" />
+    <ClInclude Include="QDynamicObject.h" />
+    <ClInclude Include="QPredator.h" />
+    <ClInclude Include="QRunner.h" />
+    <ClInclude Include="QStaticObject.h" />
+    <ClInclude Include="QSuicideBomber.h" />
+    <ClInclude Include="QWall.h" />
     <QtMoc Include="QParameters.h">
       <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles;.;$(QTDIR)\include;.\GeneratedFiles\$(ConfigurationName)\.;$(QTDIR)\include\QtCore;$(QTDIR)\include\QtGui;$(QTDIR)\include\QtANGLE;$(QTDIR)\include\QtWidgets</IncludePath>
       <Define Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">UNICODE;_UNICODE;WIN32;WIN64;QT_DLL;QT_CORE_LIB;QT_GUI_LIB;QT_WIDGETS_LIB</Define>
