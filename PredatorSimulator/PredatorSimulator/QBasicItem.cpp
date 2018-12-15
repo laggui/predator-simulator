@@ -11,11 +11,6 @@ QBasicItem::~QBasicItem()
 {
 }
 
-//QBasicItem::getBrushColor()
-//{
-//	return mBrush;
-//}
-
 void QBasicItem::setColor(QBrush const & brush)
 {
 	mBrush = brush;

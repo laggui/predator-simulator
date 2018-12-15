@@ -4,7 +4,8 @@
 #include <QGraphicsItem>
 #include <QBrush>
 
-
+// QBasicItem est une classe abstraite de base qui définie des attributs et méthodes
+// communs pour les entités du projet (vivantes et statiques)
 class QBasicItem : public QGraphicsItem
 {
 public:
@@ -14,12 +15,14 @@ public:
 	//QBrush getBrushColor(); fonction existe deja : const QColor &QBrush::color() const // pas bien defini ??
 	//Returns the brush color
 
+	// Mutateur de couleur
 	void setColor(QBrush const & brush);
 
-private:
+protected:
+	// La couleur de fond
 	QBrush mBrush;
-	//QGraphicsEllipseItem mShape; pas sûr que ça va ici
-
+	// La forme
+	QPolygonF mShape;
 };
 
 
