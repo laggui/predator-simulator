@@ -46,10 +46,10 @@ void NotreClasse::advance(int phase)
 	
 	// Itérer à travers les items et vérifier leur type
 	foreach (QGraphicsItem *item, collidingItems) {
-		if (classeUn = dynamic_cast<NotreClasseUn*>(item)) {
+		if (auto classeUn = dynamic_cast<NotreClasseUn*>(item)) {
 			...
 		}
-		else if (classeDeux = dynamic_cast<NotreClasseDeux*>(item)) {
+		else if (auto classeDeux = dynamic_cast<NotreClasseDeux*>(item)) {
 			...
 		}
 		...
