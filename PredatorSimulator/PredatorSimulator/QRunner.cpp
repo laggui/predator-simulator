@@ -1,28 +1,27 @@
 #include "QRunner.h"
+#include <QPainter>
 
-
-
-QRunner::QRunner()
+QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, quint8 initialHealth, QBrush const & brush, QGraphicsItem * parent)
+	: QDynamicObject(initialSpeed, brush, parent),
+	  mHealthPoints{ initialHealth }
 {
+	setPos(initialPosition);
+	setRotation(initialOrientationDegrees);
+	setScale(scale);
 }
 
-
-QRunner::~QRunner()
-{
-}
-
-void QRunner::setHP(int hp)
+void QRunner::setHP(quint8 hp)
 {
 	mHealthPoints = hp;
 }
 
-void QRunner::setNextAttributes(int hp, QBrush const & brush)
+void QRunner::setNextAttributes(quint8 hp, QBrush const & brush)
 {
 	mNextAttributes.healthPoints = hp;
 	mNextAttributes.brush = brush;
 }
 
-int QRunner::getHP() const
+quint8 QRunner::getHP() const
 {
 	return mHealthPoints;
 }
@@ -38,6 +37,9 @@ QRectF QRunner::boundingRect() const
 
 void QRunner::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
+	painter->setPen(Qt::NoPen);
+	painter->setBrush(mBrush);
+	painter->drawEllipse(mShape);
 }
 
 void QRunner::advance(int phase)

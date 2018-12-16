@@ -13,14 +13,14 @@ struct Position
 
 struct RunnerAttributes : public Position
 {
-	int healthPoints;
+	quint8 healthPoints;
 	QBrush brush;
 };
 
 struct PredatorAttributes : public Position
 {
-	int damage;
-	int timeNoKill;
+	quint8 damage;
+	quint8 timeNoKill;
 	qreal scaleFactor;
 };
 

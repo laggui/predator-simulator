@@ -3,8 +3,12 @@
 #include <QGraphicsView>
 #include <QHBoxLayout>
 #include <QGraphicsRectItem>
+#include <QRandomGenerator>
 #include "QControlBar.h"
 #include "QParameters.h"
+#include "QPredator.h"
+#include "QWall.h"
+#include "Random.h"
 
 const size_t PredatorSimulator::sMaxNbrOfItems{ 1000 };
 const QSize PredatorSimulator::sSceneSize(1000, 600);
@@ -12,7 +16,7 @@ const QColor PredatorSimulator::sSceneBackgroundColor(16, 32, 64);
 
 PredatorSimulator::PredatorSimulator(QWidget *parent)
 	: QMainWindow(parent),
-	mSimulationView { new QGraphicsView(&mGraphicsScene) },
+	mSimulationView{ new QGraphicsView(&mGraphicsScene) },
 	mParameters{ new QParameters(sMaxNbrOfItems) },
 	mControlBar{ new QControlBar(Qt::Vertical) }
 {
@@ -53,26 +57,36 @@ void PredatorSimulator::startSimulation()
 	// Vide la scène pour démarrer une nouvelle démo
 	mGraphicsScene.clear();
 
-	
+
 	// Met un item rectangulaire pour bien voir les limites de la scène
 	QGraphicsRectItem * background{ new QGraphicsRectItem(mGraphicsScene.sceneRect()) };
 	background->setPen(Qt::NoPen);
 	background->setBrush(sSceneBackgroundColor);
-	
+
 	mGraphicsScene.addItem(background);
-	/*
+
+	//mGraphicsScene.addItem(
+	//	new QWall(
+	//		QPointF(-sSceneSize.width() / 2, sSceneSize.height() / 2)));
+
+	//mGraphicsScene.addItem(
+	//	new QWall(
+	//		QPointF(sSceneSize.width() / 2, sSceneSize.height() / 2)));
+
 	for (int i{ 0 }; i < mParameters->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
 			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
-			new QArrowItem(
+			new QPredator(
 				QPointF(),					// ils sont tous à l'origine au départ!
 				random(360.0),				// orientation aléatoire
 				random(1.0, 10.0),			// vitesse aléatoire entre 1 et 10
 				random(5.0, 15.0),			// taille aléatoire entre 5 et 15
+				25,							// dommage
+				0,							// timeNoKill
 				randomColor()));			// couleur aléatoire
-	} */
+	}
 	mTimer.start(30);
-	
+
 }
 
 void PredatorSimulator::stepSimulation()

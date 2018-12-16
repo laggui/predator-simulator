@@ -1,19 +1,18 @@
 #include "QSuicideBomber.h"
+#include <QPainter>
 
-
-
-QSuicideBomber::QSuicideBomber()
+QSuicideBomber::QSuicideBomber(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, qreal damage, QBrush const & brush, QGraphicsItem * parent)
+	: QDynamicObject(initialSpeed, brush, parent),
+	  mDamage{ damage }
 {
-}
-
-
-QSuicideBomber::~QSuicideBomber()
-{
+	setPos(initialPosition);
+	setRotation(initialOrientationDegrees);
+	setScale(scale);
 }
 
 void QSuicideBomber::setDamage(qreal damage)
 {
-	if (damage > 0 && damage < 1) {
+	if (damage > 0 && damage <= 1) {
 		mDamage = damage;
 	}
 	else {
@@ -43,6 +42,9 @@ QRectF QSuicideBomber::boundingRect() const
 
 void QSuicideBomber::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
 {
+	painter->setPen(Qt::NoPen);
+	painter->setBrush(mBrush);
+	painter->drawPolygon(mShape);
 }
 
 void QSuicideBomber::advance(int phase)

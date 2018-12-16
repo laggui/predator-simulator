@@ -5,13 +5,13 @@
 
 // QDynamicObject est une classe abstraite qui définie des attributs et méthodes
 // communs pour les entités vivantes
-class QDynamicObject : public QBasicItem
+template <typename T>
+class QDynamicObject : public QBasicItem<T>
 {
 public:
-	QDynamicObject();
-	~QDynamicObject();
+	QDynamicObject(qreal initialSpeed = 1.0, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr) : QBasicItem<T>(brush, parent), mSpeed{ initialSpeed } {}
 
-	void setSpeed(qreal speed);
+	void setSpeed(qreal speed) { mSpeed = speed; }
 	// Fonction virtuelle pure
 	virtual void clone() = 0;
 protected:

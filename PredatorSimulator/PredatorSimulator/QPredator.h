@@ -5,22 +5,21 @@
 #include "Attributes.h"
 
 // La classe QPredator interagit avec 
-class QPredator : public QDynamicObject
+class QPredator : public QDynamicObject<QRectF>
 {
 public:
-	// TO-DO: constructeur avec des paramètres (par défaut)
-	QPredator();
-	~QPredator();
+	QPredator(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
+			  quint8 damage = 25, quint8 timeNoKill = 0, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
 
 	// Mutateurs
-	void setDamage(int damage);
+	void setDamage(quint8 damage);
 	void resetTimeNoKill();
 	void incrementTimeNoKill();
-	void setNextAttributes(int damage, int timeNoKill, qreal scaleFactor);
+	void setNextAttributes(quint8 damage, quint8 timeNoKill, qreal scaleFactor);
 	
 	// Accesseurs
-	int getDamage() const;
-	int getTimeNoKill() const;
+	quint8 getDamage() const;
+	quint8 getTimeNoKill() const;
 
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
 	void clone() override;
@@ -35,9 +34,9 @@ public:
 
 private:
 	// Le dommage que le prédateur inflige
-	int mDamage;
+	quint8 mDamage;
 	// Le temps depuis sa dernière victime
-	int mTimeNoKill;
+	quint8 mTimeNoKill;
 	// Les prochains attributs
 	PredatorAttributes mNextAttributes;
 

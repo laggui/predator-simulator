@@ -48,9 +48,6 @@
     <ClCompile Include="QBasicItem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QStaticObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="QWall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QSuicideBomber.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Random.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,9 +98,6 @@
     <ClInclude Include="QBasicItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="QStaticObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="QWall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -120,6 +117,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Attributes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

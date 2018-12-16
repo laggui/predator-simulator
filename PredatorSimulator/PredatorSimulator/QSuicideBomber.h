@@ -4,11 +4,11 @@
 #include "QDynamicObject.h"
 #include "Attributes.h"
 
-class QSuicideBomber : public QDynamicObject
+class QSuicideBomber : public QDynamicObject<QPolygonF>
 {
 public:
-	QSuicideBomber();
-	~QSuicideBomber();
+	QSuicideBomber(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
+				   qreal damage = 0.1, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
 
 	// Mutateurs
 	void setDamage(qreal damage);
@@ -29,7 +29,7 @@ public:
 	void advance(int phase) override;
 
 private:
-	// Le dommage (influence la grosseur d'un QPredator - doit être entre ]0, 1[)
+	// Le dommage (influence la grosseur d'un QPredator - doit être entre ]0, 1])
 	qreal mDamage;
 	// La prochaine position
 	Position mNextPos;

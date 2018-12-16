@@ -123,9 +123,9 @@
     <ClCompile Include="QParameters.cpp" />
     <ClCompile Include="QPredator.cpp" />
     <ClCompile Include="QRunner.cpp" />
-    <ClCompile Include="QStaticObject.cpp" />
     <ClCompile Include="QSuicideBomber.cpp" />
     <ClCompile Include="QWall.cpp" />
+    <ClCompile Include="Random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="PredatorSimulator.h" />
@@ -144,9 +144,9 @@
     <ClInclude Include="QDynamicObject.h" />
     <ClInclude Include="QPredator.h" />
     <ClInclude Include="QRunner.h" />
-    <ClInclude Include="QStaticObject.h" />
     <ClInclude Include="QSuicideBomber.h" />
     <ClInclude Include="QWall.h" />
+    <ClInclude Include="Random.h" />
     <QtMoc Include="QParameters.h" />
     <QtMoc Include="QControlBar.h" />
   </ItemGroup>
