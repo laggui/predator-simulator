@@ -54,6 +54,7 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 
 void PredatorSimulator::startSimulation()
 {
+	const quint8 wallWidth{ 20 };
 	// Vide la scène pour démarrer une nouvelle démo
 	mGraphicsScene.clear();
 
@@ -65,18 +66,24 @@ void PredatorSimulator::startSimulation()
 
 	mGraphicsScene.addItem(background);
 
+	// Ajout des murs
 	mGraphicsScene.addItem(
 		new QWall(
-			QPointF(-sSceneSize.width() / 2, sSceneSize.height() / 2)));
+			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
+			wallWidth,
+			sSceneSize.height())); // Gauche
 
 	mGraphicsScene.addItem(
 		new QWall(
-			QPointF(sSceneSize.width() / 2, sSceneSize.height() / 2)));
+			QPointF(sSceneSize.width() / 2 - wallWidth, -sSceneSize.height() / 2),
+			wallWidth,
+			sSceneSize.height())); // Droite
 
 	mGraphicsScene.addItem(
 		new QWall(
 			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
-			QWall::WallOrientation::Horizontal));
+			sSceneSize.width(),
+			wallWidth)); // En haut
 
 	//for (int i{ 0 }; i < mParameters->nbrOfItems(); ++i) {
 	//	mGraphicsScene.addItem(

@@ -3,12 +3,12 @@
 
 #include "QBasicItem.h"
 
-class QWall : public QBasicItem<QPolygonF>
+class QWall : public QBasicItem<QRectF>
 {
 public:
 	enum class WallOrientation { Horizontal, Vertical };
 
-	QWall(QPointF const & initialPosition = QPointF(), WallOrientation orientation = WallOrientation::Vertical,
+	QWall(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0, WallOrientation orientation = WallOrientation::Vertical,
 		  QBrush const & brush = Qt::darkRed, QGraphicsItem * parent = nullptr);
 
 	// Mutateur de couleur
