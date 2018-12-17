@@ -3,10 +3,13 @@
 
 #include "QBasicItem.h"
 
-class QWall : public QBasicItem<QRectF>
+class QWall : public QBasicItem<QPolygonF>
 {
 public:
-	QWall(QPointF const & initialPosition = QPointF(), QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
+	enum class WallOrientation { Horizontal, Vertical };
+
+	QWall(QPointF const & initialPosition = QPointF(), WallOrientation orientation = WallOrientation::Vertical,
+		  QBrush const & brush = Qt::darkRed, QGraphicsItem * parent = nullptr);
 
 	// Mutateur de couleur
 	void setColor(QBrush const & brush);

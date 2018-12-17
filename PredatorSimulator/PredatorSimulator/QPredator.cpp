@@ -3,6 +3,7 @@
 #include <QtMath>
 #include <QRandomGenerator>
 
+#include <QGraphicsScene>
 
 QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, quint8 damage, quint8 timeNoKill, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
@@ -59,7 +60,7 @@ void QPredator::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 {
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(mBrush);
-	painter->drawPolygon(mShape);
+	painter->drawEllipse(mShape);
 }
 
 void QPredator::advance(int phase)
@@ -75,7 +76,7 @@ void QPredator::advance(int phase)
 		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
 		QPointF newPosition(pos() + QPointF(qCos(newOrientationRadians), qSin(newOrientationRadians)) * mSpeed);
 		// Si la nouvelle position est à l'extérieur de la scène, la nouvelle position est téléportée à la région opposée de la scène
-		//warp(newPosition);
+		warp(newPosition);
 
 		// Applique la nouvelle orientation et la nouvelle position
 		setRotation(newOrientationDegrees);
@@ -85,4 +86,14 @@ void QPredator::advance(int phase)
 
 void QPredator::kill(QDynamicObject * object)
 {
+}
+
+qreal QPredator::warp(qreal value, qreal begin, qreal end) {
+	const qreal width = end - begin;
+	return value - qFloor((value - begin) / width) * width;
+}
+
+void QPredator::warp(QPointF & point) {
+	point.setX(warp(point.x(), scene()->sceneRect().left(), scene()->sceneRect().right()));
+	point.setY(warp(point.y(), scene()->sceneRect().top(), scene()->sceneRect().bottom()));
 }

@@ -2,14 +2,28 @@
 
 #include <QPainter>
 
-QWall::QWall(QPointF const & initialPosition, QBrush const & brush, QGraphicsItem * parent)
-	: QBasicItem<QRectF>(brush, parent)
+QWall::QWall(QPointF const & initialPosition, WallOrientation orientation, QBrush const & brush, QGraphicsItem * parent)
+	: QBasicItem(brush, parent)
 {
-	//mShape << QPointF(0, 0) // shape de mur devrait etre QRectF
-	//	<< QPointF(0, -600)
-	//	<< QPointF(20, -600)
-	//	<< QPointF(20, 0)
-	//	<< QPointF(0, 0);
+	switch (orientation) {
+
+	case WallOrientation::Horizontal:
+		mShape << QPointF(0, 0) // shape de mur top 
+			<< QPointF(0, -20)
+			<< QPointF(1000, -20)
+			<< QPointF(1000, 0)
+			<< QPointF(0, 0);
+		break;
+
+	case WallOrientation::Vertical:
+		mShape << QPointF(0, 0) // shape mur de cote 
+			<< QPointF(0, -600)
+			<< QPointF(20, -600)
+			<< QPointF(20, 0)
+			<< QPointF(0, 0);
+		break;
+
+	}
 
 	setPos(initialPosition);
 }

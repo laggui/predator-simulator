@@ -32,7 +32,7 @@ public:
 	// Fonction virtuelle de QGraphicsItem (peut être "overridée") : fait un tick de simulation
 	void advance(int phase) override;
 
-private:
+protected:
 	// Le dommage que le prédateur inflige
 	quint8 mDamage;
 	// Le temps depuis sa dernière victime
@@ -43,6 +43,9 @@ private:
 	// Élimine l'entité avec laquelle elle entre en contact
 	void kill(QDynamicObject* object);
 
+	// Fonctions mathématiques utilitaires servant à réaliser la "téléportation" : devraient être ailleurs.
+	static qreal warp(qreal value, qreal begin, qreal end);
+	void warp(QPointF & point);
 };
 
 #endif // !Q_PREDATOR_H
