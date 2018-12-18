@@ -10,6 +10,7 @@ QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDe
 	  mDamage{ damage },
 	  mTimeNoKill{ timeNoKill }
 {
+	mShape.setRect(2,2,4,4);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setScale(scale);
@@ -67,7 +68,7 @@ void QPredator::clone()
 
 QRectF QPredator::boundingRect() const
 {
-	return QRectF(-1.0 * scale(), -1.0 * scale(), 1.0 * scale(), 1.0 * scale());
+	return QRectF(mShape);
 }
 
 void QPredator::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
