@@ -3,6 +3,10 @@
 
 #include "QBasicItem.h"
 
+class QPredator;
+class QRunner;
+class QSuicideBomber;
+
 class QWall : public QBasicItem<QRectF>
 {
 public:
@@ -20,9 +24,10 @@ public:
 
 	// Fonction virtuelle de QGraphicsItem (peut être "overridée") : fait un tick de simulation
 	void advance(int phase) override;
-	//bounce();
 protected:
-	//mBounceDirection;
+	qreal mWallOrientation;
+
+	void bounce(QPredator * pred);
 };
 
 

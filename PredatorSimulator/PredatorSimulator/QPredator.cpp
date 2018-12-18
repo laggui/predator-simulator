@@ -10,7 +10,7 @@ QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDe
 	  mDamage{ damage },
 	  mTimeNoKill{ timeNoKill }
 {
-	mShape.setRect(2,2,4,4);
+	mShape.setRect(2, 2, 4, 4);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setScale(scale);

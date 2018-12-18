@@ -26,8 +26,6 @@ private:
 	QParameters * mParametersQRunners;
 	QParameters * mParametersQPredators;
 	QParameters * mParametersQSuicideBombers;
-
-
 	QControlBar * mControlBar;
 
 	QTimer mTimer;

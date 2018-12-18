@@ -35,7 +35,6 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	controlLayout->addWidget(mParametersQRunners);
 	controlLayout->addWidget(mParametersQPredators);
 	controlLayout->addWidget(mParametersQSuicideBombers);
-
 	controlLayout->addStretch();
 	controlLayout->addWidget(mControlBar);
 

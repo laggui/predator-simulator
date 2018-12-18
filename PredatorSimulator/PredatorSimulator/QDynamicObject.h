@@ -14,6 +14,10 @@ public:
 	void setSpeed(qreal speed) { mSpeed = speed; }
 	// Fonction virtuelle pure
 	virtual void clone() = 0;
+	virtual void setNextPos(qreal x, qreal y) = 0;
+	virtual void setNextOrientation(qreal orientation) = 0;
+
+	void bounce(qreal bounceAngle) { setNextOrientation(2 * bounceAngle - rotation()); }
 protected:
 	// La vitesse
 	qreal mSpeed;

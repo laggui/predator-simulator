@@ -1,6 +1,8 @@
 #include "QWall.h"
 
 #include "QPredator.h"
+#include "QRunner.h"
+#include "QSuicideBomber.h"
 #include <QPainter>
 
 QWall::QWall(QPointF const & topLeft, qreal width, qreal height, QBrush const & brush, QGraphicsItem * parent)
@@ -32,11 +34,11 @@ void QWall::advance(int phase)
 	if (phase == 0) {
 		// Récupérer les items qui sont en collision
 		QList<QGraphicsItem *> collidingObjects = collidingItems();
-		
+
 		// Itérer à travers les objets en collision
 		foreach(QGraphicsItem *item, collidingObjects) {
 			if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
-				//predatorObj->setNextOrientation(predatorObj->rotation() )
+				//bounce(predatorObj);
 			}
 		}
 	}
