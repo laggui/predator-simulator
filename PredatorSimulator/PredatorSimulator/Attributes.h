@@ -4,20 +4,20 @@
 #include <QtGlobal>
 #include <QBrush>
 
-struct Position
+struct Attributes
 {
 	qreal x;
 	qreal y;
+	qreal orientation;
 };
 
 
-struct RunnerAttributes : public Position
+struct RunnerAttributes : public Attributes
 {
 	quint8 healthPoints;
-	QBrush brush;
 };
 
-struct PredatorAttributes : public Position
+struct PredatorAttributes : public Attributes
 {
 	quint8 damage;
 	quint8 timeNoKill;

@@ -15,7 +15,10 @@ public:
 	void setDamage(quint8 damage);
 	void resetTimeNoKill();
 	void incrementTimeNoKill();
-	void setNextAttributes(quint8 damage, quint8 timeNoKill, qreal scaleFactor);
+	void setNextPos(qreal x, qreal y);
+	void setNextOrientation(qreal orientation);
+	void setNextTimeNoKill(quint8 timeNoKill);
+	void setNextScale(qreal scale);
 	
 	// Accesseurs
 	quint8 getDamage() const;

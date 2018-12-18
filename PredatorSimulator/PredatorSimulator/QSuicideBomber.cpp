@@ -20,10 +20,15 @@ void QSuicideBomber::setDamage(qreal damage)
 	}
 }
 
-void QSuicideBomber::setNextpos(qreal x, qreal y)
+void QSuicideBomber::setNextPos(qreal x, qreal y)
 {
-	mNextPos.x = x;
-	mNextPos.y = y;
+	mNextAttributes.x = x;
+	mNextAttributes.y = y;
+}
+
+void QSuicideBomber::setNextOrientation(qreal orientation)
+{
+	mNextAttributes.orientation = orientation;
 }
 
 qreal QSuicideBomber::getDamage() const
