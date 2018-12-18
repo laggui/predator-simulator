@@ -6,9 +6,7 @@
 class QWall : public QBasicItem<QRectF>
 {
 public:
-	enum class WallOrientation { Horizontal, Vertical };
-
-	QWall(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0, WallOrientation orientation = WallOrientation::Vertical,
+	QWall(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0,
 		  QBrush const & brush = Qt::darkRed, QGraphicsItem * parent = nullptr);
 
 	// Mutateur de couleur

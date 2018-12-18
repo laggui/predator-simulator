@@ -1,29 +1,11 @@
 #include "QWall.h"
 
+#include "QPredator.h"
 #include <QPainter>
 
-QWall::QWall(QPointF const & topLeft, qreal width, qreal height, WallOrientation orientation, QBrush const & brush, QGraphicsItem * parent)
+QWall::QWall(QPointF const & topLeft, qreal width, qreal height, QBrush const & brush, QGraphicsItem * parent)
 	: QBasicItem(brush, parent)
 {
-	//switch (orientation) {
-
-	//case WallOrientation::Horizontal:
-	//	mShape << QPointF(0, 0) // shape de mur top 
-	//		<< QPointF(0, -20)
-	//		<< QPointF(1000, -20)
-	//		<< QPointF(1000, 0)
-	//		<< QPointF(0, 0);
-	//	break;
-
-	//case WallOrientation::Vertical:
-	//	mShape << QPointF(0, 0) // shape mur de cote 
-	//		<< QPointF(0, -600)
-	//		<< QPointF(20, -600)
-	//		<< QPointF(20, 0)
-	//		<< QPointF(0, 0);
-	//	break;
-
-	//}
 	mShape.setRect(-width/2, -height/2, width, height);
 	setPos(topLeft.x() + width / 2, topLeft.y() + height / 2);
 }
@@ -35,7 +17,7 @@ void QWall::setColor(QBrush const & brush)
 
 QRectF QWall::boundingRect() const
 {
-	return QRectF(-0.25 * scale(), -0.5 * scale(), 1.0 * scale(), 1.25 * scale()); // ou juste return mShape?
+	return mShape;
 }
 
 void QWall::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -48,7 +30,15 @@ void QWall::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 void QWall::advance(int phase)
 {
 	if (phase == 0) {
-		// do nothing
+		// Récupérer les items qui sont en collision
+		QList<QGraphicsItem *> collidingObjects = collidingItems();
+		
+		// Itérer à travers les objets en collision
+		foreach(QGraphicsItem *item, collidingObjects) {
+			if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
+				//predatorObj->setNextOrientation(predatorObj->rotation() )
+			}
+		}
 	}
 	else if (phase == 1) {
 		// do nothing

@@ -17,7 +17,9 @@ const QColor PredatorSimulator::sSceneBackgroundColor(16, 32, 64);
 PredatorSimulator::PredatorSimulator(QWidget *parent)
 	: QMainWindow(parent),
 	mSimulationView{ new QGraphicsView(&mGraphicsScene) },
-	mParameters{ new QParameters(sMaxNbrOfItems) },
+	mParametersQRunners{ new QParameters(sMaxNbrOfItems,"QRunners") },
+	mParametersQPredators{ new QParameters(sMaxNbrOfItems,"QPredators") },
+	mParametersQSuicideBombers{ new QParameters(sMaxNbrOfItems,"QSuicideBombers") },
 	mControlBar{ new QControlBar(Qt::Vertical) }
 {
 	ui.setupUi(this);
@@ -30,7 +32,10 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	QWidget * controlWidget{ new QWidget };
 	QVBoxLayout * controlLayout{ new QVBoxLayout };
 	controlWidget->setLayout(controlLayout);
-	controlLayout->addWidget(mParameters);
+	controlLayout->addWidget(mParametersQRunners);
+	controlLayout->addWidget(mParametersQPredators);
+	controlLayout->addWidget(mParametersQSuicideBombers);
+
 	controlLayout->addStretch();
 	controlLayout->addWidget(mControlBar);
 
@@ -85,18 +90,18 @@ void PredatorSimulator::startSimulation()
 			sSceneSize.width(),
 			wallWidth)); // En haut
 
-	//for (int i{ 0 }; i < mParameters->nbrOfItems(); ++i) {
-	//	mGraphicsScene.addItem(
-	//		// Tous les litéraux ici devraient être créés dans des constantes symboliques!
-	//		new QPredator(
-	//			QPointF(),					// ils sont tous à l'origine au départ!
-	//			random(360.0),				// orientation aléatoire
-	//			random(1.0, 10.0),			// vitesse aléatoire entre 1 et 10
-	//			random(5.0, 15.0),			// taille aléatoire entre 5 et 15
-	//			25,							// dommage
-	//			0,							// timeNoKill
-	//			randomColor()));			// couleur aléatoire
-	//}
+	for (int i{ 0 }; i < mParametersQPredators->nbrOfItems(); ++i) {
+		mGraphicsScene.addItem(
+			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
+			new QPredator(
+				QPointF(),					// ils sont tous à l'origine au départ!
+				random(360.0),				// orientation aléatoire
+				random(1.0, 10.0),			// vitesse aléatoire entre 1 et 10
+				random(5.0, 15.0),			// taille aléatoire entre 5 et 15
+				25,							// dommage
+				0,							// timeNoKill
+				randomColor()));			// couleur aléatoire
+	}
 	mTimer.start(30);
 
 }

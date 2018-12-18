@@ -337,6 +337,7 @@ ASALocalRun/
 # Local History for Visual Studio
 .localhistory/
 
+*.vcxproj
 *vcxproj.user
 # Ignore jpegs
 *.jpg

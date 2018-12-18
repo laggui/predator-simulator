@@ -6,9 +6,9 @@
 #include <QtMath>
 
 
-QParameters::QParameters(size_t maxItems, QWidget * parent)
-	:	QWidget(parent),
-		mNbrOfItems{ new QSpinBox }
+QParameters::QParameters(size_t maxItems, QString nom, QWidget * parent)
+	: QWidget(parent),
+	mNbrOfItems{ new QSpinBox }
 {
 	const size_t minMaxNbr{ 10 };
 
@@ -16,7 +16,7 @@ QParameters::QParameters(size_t maxItems, QWidget * parent)
 	mNbrOfItems->setValue(minMaxNbr);
 
 	QFormLayout * layout{ new QFormLayout };
-	layout->addRow("Nombre d'items ", mNbrOfItems);
+	layout->addRow(nom, mNbrOfItems);
 	
 	setLayout(layout);
 }

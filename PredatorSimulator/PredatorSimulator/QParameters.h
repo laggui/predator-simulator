@@ -12,7 +12,7 @@ class QParameters : public QWidget
 	Q_OBJECT
 
 public:
-	QParameters(size_t maxItems = 250, QWidget * parent = nullptr);
+	QParameters(size_t maxItems = 250, QString nom="items" , QWidget * parent = nullptr);
 
 	size_t nbrOfItems() const;
 

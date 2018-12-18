@@ -12,7 +12,8 @@ public:
 
 	// Mutateurs
 	void setDamage(qreal damage);
-	void setNextpos(qreal x, qreal y);
+	void setNextPos(qreal x, qreal y);
+	void setNextOrientation(qreal orientation);
 
 	// Accesseurs
 	qreal getDamage() const;
@@ -32,7 +33,7 @@ private:
 	// Le dommage (influence la grosseur d'un QPredator - doit être entre ]0, 1])
 	qreal mDamage;
 	// La prochaine position
-	Position mNextPos;
+	Attributes mNextAttributes;
 };
 
 #endif // !Q_SUICIDE_BOMBER_H
