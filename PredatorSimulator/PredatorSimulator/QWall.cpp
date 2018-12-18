@@ -29,6 +29,22 @@ void QWall::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, Q
 	painter->drawRect(mShape);
 }
 
+void QWall::bounce(QGraphicsItem * item)
+{
+	if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
+		item->setRotation(180 - rotation());
+		//bounce(predatorObj);
+	}
+	if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
+		item->setRotation(180 - rotation());
+		//bounce(runnerObj);
+	}
+	if (auto suicideBomberObj = dynamic_cast<QSuicideBomber*>(item)) {
+		item->setRotation(rotation() >= 180 ? rotation() - 180 : rotation() + 180);
+		//bounce(suicideBomberObj);
+	}
+}
+
 void QWall::advance(int phase)
 {
 	if (phase == 0) {
@@ -37,9 +53,7 @@ void QWall::advance(int phase)
 
 		// Itérer à travers les objets en collision
 		foreach(QGraphicsItem *item, collidingObjects) {
-			if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
-				//bounce(predatorObj);
-			}
+			bounce(item);
 		}
 	}
 	else if (phase == 1) {

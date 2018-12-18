@@ -83,17 +83,17 @@ void QRunner::advance(int phase)
 		// do nothing
 	}
 	else if (phase == 1) {
-		static constexpr const qreal maxDeltaOrientation{ 12.5 }; // in °
-		// Détermine la nouvelle orientation selon une variation aléatoire dans l'intervalle [-maxDeltaOrientation, maxDeltaOrientation]
-		qreal newOrientationDegrees{ rotation() + QRandomGenerator::global()->bounded(2.0 * maxDeltaOrientation) - maxDeltaOrientation };
-		qreal newOrientationRadians{ qDegreesToRadians(newOrientationDegrees) };
-		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
-		QPointF newPosition(pos() + QPointF(qCos(newOrientationRadians), qSin(newOrientationRadians)) * mSpeed);
+		//static constexpr const qreal maxDeltaOrientation{ 12.5 }; // in °
+		//// Détermine la nouvelle orientation selon une variation aléatoire dans l'intervalle [-maxDeltaOrientation, maxDeltaOrientation]
+		//qreal newOrientationDegrees{ rotation() + QRandomGenerator::global()->bounded(2.0 * maxDeltaOrientation) - maxDeltaOrientation };
+		//qreal newOrientationRadians{ qDegreesToRadians(newOrientationDegrees) };
+		//// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+		QPointF newPosition(pos() + QPointF(qCos(rotation()), qSin(rotation())) * mSpeed);
 		// Si la nouvelle position est à l'extérieur de la scène, la nouvelle position est téléportée à la région opposée de la scène
 		//warp(newPosition);
 
 		// Applique la nouvelle orientation et la nouvelle position
-		setRotation(newOrientationDegrees);
+		//setRotation(newOrientationDegrees);
 		setPos(newPosition);
 	}
 }

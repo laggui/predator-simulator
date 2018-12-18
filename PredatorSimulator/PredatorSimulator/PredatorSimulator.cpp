@@ -8,6 +8,7 @@
 #include "QParameters.h"
 #include "QPredator.h"
 #include "QSuicideBomber.h"
+#include "QRunner.h"
 #include "QWall.h"
 #include "Random.h"
 
@@ -94,13 +95,13 @@ void PredatorSimulator::startSimulation()
 		mGraphicsScene.addItem(
 			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
 			new QPredator(
-				QPointF(),					// ils sont tous à l'origine au départ!
-				random(360.0),				// orientation aléatoire
+				QPointF(0, -sSceneSize.height() / 2 + (i + 1) * (sSceneSize.height() / (mParametersQPredators->nbrOfItems() + 1))),	// ils sont tous à l'origine au départ!
+				i%2*180,			// orientation aléatoire
 				random(1.0, 10.0),			// vitesse aléatoire entre 1 et 10
 				random(5.0, 15.0),			// taille aléatoire entre 5 et 15
 				25,							// dommage
 				0,							// timeNoKill
-				randomColor()));			// couleur aléatoire
+				Qt::red));			// couleur aléatoire
 	}
 
 	for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
@@ -108,11 +109,23 @@ void PredatorSimulator::startSimulation()
 			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
 			new QSuicideBomber(
 				QPointF(random(-sSceneSize.width() / 2, sSceneSize.width() / 2 - wallWidth), -sSceneSize.height() / 2),	// En haut de la boites
-				90,																										// Orienté vers le bas
+				90.0,																										// Orienté vers le bas
 				random(1.0, 10.0),																						// vitesse aléatoire entre 1 et 10
-				20,																										// Taille
+				20.0,																										// Taille
 				0.5,																									// dommage
-				randomColor()));																							// couleur aléatoire
+				Qt::white));																								// bleu
+
+	}
+	for (int i{ 0 }; i < mParametersQRunners->nbrOfItems(); ++i) {
+		mGraphicsScene.addItem(
+			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
+			new QRunner(
+				QPointF(random(-sSceneSize.width() / 2, sSceneSize.width() / 2 - wallWidth), -sSceneSize.height() / 2),	// En haut de la boites
+				random(20.0, 160.0),																										// Orienté vers le bas
+				random(1.0, 10.0),
+				10.0,
+				Qt::blue// vitesse aléatoire entre 1 et 10																									// dommage
+				));																						
 
 	}
 	mTimer.start(30);
