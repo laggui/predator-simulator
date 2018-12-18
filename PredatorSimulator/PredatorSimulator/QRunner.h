@@ -20,9 +20,6 @@ public:
 	// Accesseur
 	quint8 getHP() const;
 
-	// décrémente les HP et met à jour la coulour automatiquement
-	void setHp(int hp);
-
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
 	void clone() override;
 

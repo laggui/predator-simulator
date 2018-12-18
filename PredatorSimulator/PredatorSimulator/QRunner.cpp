@@ -14,7 +14,7 @@ QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegree
 
 }
 
-void QRunner::setHp(int hp)
+void QRunner::setHP(quint8 hp)
 {
 	QBrush nextColor;
 	const QColor red(Qt::red);
