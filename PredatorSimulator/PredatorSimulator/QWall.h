@@ -26,8 +26,6 @@ public:
 	void advance(int phase) override;
 protected:
 	qreal mWallOrientation;
-
-	void bounce(QPredator * pred);
 };
 
 
