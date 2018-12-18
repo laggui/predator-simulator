@@ -23,7 +23,11 @@ private:
 
 	QGraphicsScene mGraphicsScene;
 	QGraphicsView * mSimulationView;
-	QParameters * mParameters;
+	QParameters * mParametersQRunners;
+	QParameters * mParametersQPredators;
+	QParameters * mParametersQSuicideBombers;
+
+
 	QControlBar * mControlBar;
 
 	QTimer mTimer;

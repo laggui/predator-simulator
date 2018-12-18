@@ -17,7 +17,9 @@ const QColor PredatorSimulator::sSceneBackgroundColor(16, 32, 64);
 PredatorSimulator::PredatorSimulator(QWidget *parent)
 	: QMainWindow(parent),
 	mSimulationView{ new QGraphicsView(&mGraphicsScene) },
-	mParameters{ new QParameters(sMaxNbrOfItems) },
+	mParametersQRunners{ new QParameters(sMaxNbrOfItems,"QRunners") },
+	mParametersQPredators{ new QParameters(sMaxNbrOfItems,"QPredators") },
+	mParametersQSuicideBombers{ new QParameters(sMaxNbrOfItems,"QSuicideBombers") },
 	mControlBar{ new QControlBar(Qt::Vertical) }
 {
 	ui.setupUi(this);
@@ -30,7 +32,10 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	QWidget * controlWidget{ new QWidget };
 	QVBoxLayout * controlLayout{ new QVBoxLayout };
 	controlWidget->setLayout(controlLayout);
-	controlLayout->addWidget(mParameters);
+	controlLayout->addWidget(mParametersQRunners);
+	controlLayout->addWidget(mParametersQPredators);
+	controlLayout->addWidget(mParametersQSuicideBombers);
+
 	controlLayout->addStretch();
 	controlLayout->addWidget(mControlBar);
 
