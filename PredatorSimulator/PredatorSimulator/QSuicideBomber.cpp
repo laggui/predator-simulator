@@ -1,13 +1,20 @@
 #include "QSuicideBomber.h"
+#include <QtMath>
 #include <QPainter>
 
 QSuicideBomber::QSuicideBomber(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, qreal damage, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
 	  mDamage{ damage }
 {
+	mShape << QPointF(0, 0)
+		<< QPointF(-0.25, 0.5)
+		<< QPointF(1, 0)
+		<< QPointF(-0.25, -0.5);
+
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setScale(scale);
+
 }
 
 void QSuicideBomber::setDamage(qreal damage)
@@ -38,6 +45,7 @@ qreal QSuicideBomber::getDamage() const
 
 void QSuicideBomber::clone()
 {
+	// N'est pas cloné.
 }
 
 QRectF QSuicideBomber::boundingRect() const
@@ -54,4 +62,12 @@ void QSuicideBomber::paint(QPainter * painter, const QStyleOptionGraphicsItem * 
 
 void QSuicideBomber::advance(int phase)
 {
+	if (phase == 0) {
+		// do nothing
+	}
+	else if (phase == 1) {
+		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+		QPointF newPosition(pos() + QPointF(0, 1) * mSpeed);
+		setPos(newPosition);
+	}
 }

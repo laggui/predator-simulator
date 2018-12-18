@@ -7,6 +7,7 @@
 #include "QControlBar.h"
 #include "QParameters.h"
 #include "QPredator.h"
+#include "QSuicideBomber.h"
 #include "QWall.h"
 #include "Random.h"
 
@@ -100,6 +101,19 @@ void PredatorSimulator::startSimulation()
 				25,							// dommage
 				0,							// timeNoKill
 				randomColor()));			// couleur aléatoire
+	}
+
+	for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
+		mGraphicsScene.addItem(
+			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
+			new QSuicideBomber(
+				QPointF(random(-sSceneSize.width() / 2, sSceneSize.width() / 2 - wallWidth), -sSceneSize.height() / 2),	// En haut de la boites
+				90,																										// Orienté vers le bas
+				random(1.0, 10.0),																						// vitesse aléatoire entre 1 et 10
+				20,																										// Taille
+				0.5,																									// dommage
+				randomColor()));																							// couleur aléatoire
+
 	}
 	mTimer.start(30);
 
