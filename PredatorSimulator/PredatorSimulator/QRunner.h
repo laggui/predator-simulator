@@ -9,7 +9,7 @@ class QRunner : public QDynamicObject<QRectF>
 public:
 	// TO-DO: constructeur avec des paramètres (par défaut)
 	QRunner(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
-			quint8 initialHealth = 100, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
+			quint8 initialHealth = 3, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
 
 	// Mutateurs
 	void setHP(quint8 hp);
@@ -17,6 +17,9 @@ public:
 
 	// Accesseur
 	quint8 getHP() const;
+	
+	// décrémente les HP et met à jour la coulour automatiquement
+	void setHp(int hp);
 
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
 	void clone() override;
