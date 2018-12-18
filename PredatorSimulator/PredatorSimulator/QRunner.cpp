@@ -19,20 +19,10 @@ void QRunner::setHP(quint8 hp)
 	mHealthPoints = hp;
 }
 
-void QRunner::setNextPos(qreal x, qreal y)
-{
-	mNextAttributes.x = x;
-	mNextAttributes.y = y;
-}
-
-void QRunner::setNextOrientation(qreal orientation)
-{
-	mNextAttributes.orientation = orientation;
-}
-
-void QRunner::setNextHP(quint8 hp)
+void QRunner::setNextAttributes(quint8 hp, QBrush const & brush)
 {
 	mNextAttributes.healthPoints = hp;
+	mNextAttributes.brush = brush;
 }
 
 quint8 QRunner::getHP() const

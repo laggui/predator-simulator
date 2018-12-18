@@ -13,9 +13,7 @@ public:
 
 	// Mutateurs
 	void setHP(quint8 hp);
-	void setNextPos(qreal x, qreal y);
-	void setNextOrientation(qreal orientation);
-	void setNextHP(quint8 hp);
+	void setNextAttributes(quint8 hp, QBrush const & brush);
 
 	// Accesseur
 	quint8 getHP() const;
