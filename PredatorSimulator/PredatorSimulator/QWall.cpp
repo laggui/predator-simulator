@@ -5,11 +5,16 @@
 #include "QSuicideBomber.h"
 #include <QPainter>
 
-QWall::QWall(QPointF const & topLeft, qreal width, qreal height, QBrush const & brush, QGraphicsItem * parent)
+
+
+QWall::QWall(QPointF const & topLeft, qreal width, qreal height, qreal orientation, QBrush const & brush, QGraphicsItem * parent)
 	: QBasicItem(brush, parent)
 {
-	mShape.setRect(-width/2, -height/2, width, height);
-	setPos(topLeft.x() + width / 2, topLeft.y() + height / 2);
+	
+		mWallOrientation = orientation;
+		mShape.setRect(-width / 2, -height / 2, width, height);
+		setPos(topLeft.x() + width / 2, topLeft.y() + height / 2);
+	
 }
 
 QRectF QWall::boundingRect() const

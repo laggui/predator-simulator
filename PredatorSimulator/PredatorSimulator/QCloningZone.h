@@ -5,7 +5,7 @@
 class QCloningZone : public QWall
 {
 public:
-	QCloningZone(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0,
+	QCloningZone(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0, qreal orientation = 0,
 				 QBrush const & brush = Qt::yellow, QGraphicsItem * parent = nullptr);
 };
 

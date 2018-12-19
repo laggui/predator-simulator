@@ -10,7 +10,7 @@ class QSuicideBomber;
 class QWall : public QBasicItem<QRectF>
 {
 public:
-	QWall(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0,
+	QWall( QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0, qreal orientation = 90,
 		  QBrush const & brush = Qt::darkRed, QGraphicsItem * parent = nullptr);
 
 	// Fonction abstraite de QGraphicsItem (DOIT être "overridée") : retourne la taille de l'item
