@@ -10,11 +10,13 @@
 #include "QSuicideBomber.h"
 #include "QRunner.h"
 #include "QWall.h"
+#include "QEcosystem.h"
 #include "Random.h"
 
 const size_t PredatorSimulator::sMaxNbrOfItems{ 1000 };
 const QSize PredatorSimulator::sSceneSize(1000, 600);
 const QColor PredatorSimulator::sSceneBackgroundColor(16, 32, 64);
+const int PredatorSimulator::sTimerInterval{ 30 };
 
 PredatorSimulator::PredatorSimulator(QWidget *parent)
 	: QMainWindow(parent),
@@ -22,7 +24,8 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	mParametersQRunners{ new QParameters(sMaxNbrOfItems,"QRunners") },
 	mParametersQPredators{ new QParameters(sMaxNbrOfItems,"QPredators") },
 	mParametersQSuicideBombers{ new QParameters(sMaxNbrOfItems,"QSuicideBombers") },
-	mControlBar{ new QControlBar(Qt::Vertical) }
+	mControlBar{ new QControlBar(Qt::Vertical) },
+	mEcosystem{ new QEcosystem(sTimerInterval, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height()) }
 {
 	ui.setupUi(this);
 
@@ -66,11 +69,12 @@ void PredatorSimulator::startSimulation()
 
 
 	// Met un item rectangulaire pour bien voir les limites de la scène
-	QGraphicsRectItem * background{ new QGraphicsRectItem(mGraphicsScene.sceneRect()) };
-	background->setPen(Qt::NoPen);
-	background->setBrush(sSceneBackgroundColor);
+	// TO-DO: remplacer le background par mEcosystem [DONE]
+	//QGraphicsRectItem * background{ new QGraphicsRectItem(mGraphicsScene.sceneRect()) };
+	//background->setPen(Qt::NoPen);
+	//background->setBrush(sSceneBackgroundColor);
 
-	mGraphicsScene.addItem(background);
+	mGraphicsScene.addItem(mEcosystem);
 
 	// Ajout des murs
 	mGraphicsScene.addItem(
@@ -128,7 +132,7 @@ void PredatorSimulator::startSimulation()
 				));																						
 
 	}
-	mTimer.start(30);
+	mTimer.start(sTimerInterval);
 
 }
 
@@ -144,7 +148,7 @@ void PredatorSimulator::pauseSimulation()
 
 void PredatorSimulator::resumeSimulation()
 {
-	mTimer.start(30);
+	mTimer.start(sTimerInterval);
 }
 
 void PredatorSimulator::stopSimulation()

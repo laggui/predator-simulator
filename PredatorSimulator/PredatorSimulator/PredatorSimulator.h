@@ -10,6 +10,7 @@
 class QGraphicsView;
 class QControlBar;
 class QParameters;
+class QEcosystem;
 
 class PredatorSimulator : public QMainWindow
 {
@@ -29,10 +30,12 @@ private:
 	QControlBar * mControlBar;
 
 	QTimer mTimer;
+	QEcosystem * mEcosystem;
 
 	static const size_t sMaxNbrOfItems;
 	static const QSize sSceneSize;
 	static const QColor sSceneBackgroundColor;
+	static const int sTimerInterval;
 
 private slots:
 	void startSimulation();

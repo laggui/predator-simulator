@@ -6,6 +6,11 @@ double random(qreal maxValue)
 	return QRandomGenerator::global()->bounded(maxValue);
 }
 
+int random(int maxValue)
+{
+	return QRandomGenerator::global()->bounded(maxValue);
+}
+
 double random(qreal minValue, qreal maxValue)
 {
 	return random(maxValue - minValue) + minValue;

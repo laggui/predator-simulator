@@ -6,6 +6,7 @@
 
 // Fonctions utilitaires de génération de valeurs aléatoires : devraient être ailleurs.
 double random(qreal maxValue);
+int random(int maxValue);
 double random(qreal minValue, qreal maxValue);
 QColor randomColor();
 
