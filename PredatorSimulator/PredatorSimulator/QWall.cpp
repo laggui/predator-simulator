@@ -12,11 +12,6 @@ QWall::QWall(QPointF const & topLeft, qreal width, qreal height, QBrush const & 
 	setPos(topLeft.x() + width / 2, topLeft.y() + height / 2);
 }
 
-void QWall::setColor(QBrush const & brush)
-{
-	mBrush = brush;
-}
-
 QRectF QWall::boundingRect() const
 {
 	return mShape;

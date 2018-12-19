@@ -13,9 +13,6 @@ public:
 	QWall(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0,
 		  QBrush const & brush = Qt::darkRed, QGraphicsItem * parent = nullptr);
 
-	// Mutateur de couleur
-	void setColor(QBrush const & brush);
-
 	// Fonction abstraite de QGraphicsItem (DOIT être "overridée") : retourne la taille de l'item
 	QRectF boundingRect() const override;
 
