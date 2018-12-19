@@ -2,7 +2,6 @@
 #define ATTRIBUTES_H
 
 #include <QtGlobal>
-#include <QBrush>
 
 struct Attributes
 {
