@@ -46,6 +46,7 @@ qreal QSuicideBomber::getDamage() const
 void QSuicideBomber::clone()
 {
 	// N'est pas cloné.
+	bounce(180); // On le fait plutôt rebondir dans le sens opposé.
 }
 
 QRectF QSuicideBomber::boundingRect() const
