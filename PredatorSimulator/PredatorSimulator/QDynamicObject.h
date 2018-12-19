@@ -2,6 +2,7 @@
 #define Q_DYNAMIC_OBJECT_H
 
 #include "QBasicItem.h"
+#include <QtMath>
 
 // QDynamicObject est une classe abstraite qui définie des attributs et méthodes
 // communs pour les entités vivantes
@@ -17,7 +18,11 @@ public:
 	virtual void setNextPos(qreal x, qreal y) = 0;
 	virtual void setNextOrientation(qreal orientation) = 0;
 
-	void bounce(qreal bounceAngle) { setNextOrientation(2 * bounceAngle - rotation()); }
+	void bounce(qreal bounceAngle) { qreal nextOrientation{ 2 * bounceAngle - rotation() };
+									 setNextOrientation(nextOrientation);
+									 setNextPos(pos().x() + qCos(qDegreesToRadians(nextOrientation)) * mSpeed,
+												pos().y() + qSin(qDegreesToRadians(nextOrientation)) * mSpeed);
+								   }
 protected:
 	// La vitesse
 	qreal mSpeed;
