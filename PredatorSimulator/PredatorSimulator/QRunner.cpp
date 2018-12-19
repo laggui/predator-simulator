@@ -1,4 +1,5 @@
 #include "QRunner.h"
+#include "qgraphicsscene.h"
 #include <QPainter>
 #include <QtMath>
 #include <QRandomGenerator>
@@ -15,6 +16,12 @@ QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegree
 	mShape.setRect(2, 2, 4, 4);
 
 }
+
+//QRunner::QRunner(QRunner & runnerToCopy)
+//	: QRunner(runnerToCopy.pos(), runnerToCopy.rotation(), runnerToCopy.mSpeed, runnerToCopy.scale(), runnerToCopy.mHealthPoints, runnerToCopy.mBrush)
+//{
+//	mNextAttributes = runnerToCopy.mNextAttributes;
+//}
 
 void QRunner::setHP(quint8 hp)
 {
@@ -65,6 +72,11 @@ quint8 QRunner::getHP() const
 
 void QRunner::clone()
 {
+	qreal rotationModifier = 90.0;
+	QGraphicsScene * gScene = scene();
+	QRunner * runnerToCopy = this;
+	runnerToCopy->bounce(rotationModifier);
+	gScene->addItem(runnerToCopy);
 }
 
 QRectF QRunner::boundingRect() const

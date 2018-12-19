@@ -19,6 +19,8 @@ class PredatorSimulator : public QMainWindow
 public:
 	PredatorSimulator(QWidget *parent = Q_NULLPTR);
 
+	QSize sceneSize() const;
+
 private:
 	Ui::PredatorSimulatorClass ui;
 

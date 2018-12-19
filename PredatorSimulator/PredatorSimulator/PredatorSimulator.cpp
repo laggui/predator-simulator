@@ -90,7 +90,7 @@ void PredatorSimulator::startSimulation()
 			QPointF(sSceneSize.width() / 2 - wallWidth, -sSceneSize.height() / 2),
 			wallWidth,
 			sSceneSize.height(),
-			-180)); // Droite
+			90)); // Droite
 
 	//mGraphicsScene.addItem(
 	//	new QWall(
@@ -137,6 +137,11 @@ void PredatorSimulator::startSimulation()
 	}
 	mTimer.start(sTimerInterval);
 
+}
+
+QSize PredatorSimulator::sceneSize() const
+{
+	return sSceneSize;
 }
 
 void PredatorSimulator::stepSimulation()

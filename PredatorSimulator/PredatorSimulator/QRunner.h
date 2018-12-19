@@ -11,6 +11,8 @@ public:
 	QRunner(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
 			quint8 initialHealth = 3, QBrush const & brush = Qt::green, QGraphicsItem * parent = nullptr);
 
+	//QRunner(QRunner & runnerToCopy);
+
 	// Mutateurs
 	void setHP(quint8 hp);
 	void setNextHP(quint8 hp);
