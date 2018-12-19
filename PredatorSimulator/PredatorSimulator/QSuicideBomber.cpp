@@ -50,7 +50,7 @@ void QSuicideBomber::clone()
 
 QRectF QSuicideBomber::boundingRect() const
 {
-	return QRectF();
+	return QRectF(-0.25 * scale(), -0.5 * scale(), 1.0 * scale(), 1.25 * scale());
 }
 
 void QSuicideBomber::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
