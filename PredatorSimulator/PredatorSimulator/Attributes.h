@@ -19,7 +19,6 @@ struct RunnerAttributes : public Attributes
 
 struct PredatorAttributes : public Attributes
 {
-	quint8 damage;
 	quint8 timeNoKill;
 	qreal scaleFactor;
 };
