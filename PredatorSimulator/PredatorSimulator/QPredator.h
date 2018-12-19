@@ -15,8 +15,8 @@ public:
 	void setDamage(quint8 damage);
 	void resetTimeNoKill();
 	void incrementTimeNoKill();
-	void setNextPos(qreal x, qreal y);
-	void setNextOrientation(qreal orientation);
+	void setNextPos(qreal x, qreal y) override;
+	void setNextOrientation(qreal orientation) override;
 	void setNextTimeNoKill(quint8 timeNoKill);
 	void setNextScale(qreal scale);
 	

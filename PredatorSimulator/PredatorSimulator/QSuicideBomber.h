@@ -12,8 +12,8 @@ public:
 
 	// Mutateurs
 	void setDamage(qreal damage);
-	void setNextPos(qreal x, qreal y);
-	void setNextOrientation(qreal orientation);
+	void setNextPos(qreal x, qreal y) override;
+	void setNextOrientation(qreal orientation) override;
 
 	// Accesseurs
 	qreal getDamage() const;
