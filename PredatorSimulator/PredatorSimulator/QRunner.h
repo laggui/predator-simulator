@@ -9,7 +9,7 @@ class QRunner : public QDynamicObject<QRectF>
 public:
 	// TO-DO: constructeur avec des paramètres (par défaut)
 	QRunner(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
-			quint8 initialHealth = 3, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
+			quint8 initialHealth = 3, QBrush const & brush = Qt::green, QGraphicsItem * parent = nullptr);
 
 	// Mutateurs
 	void setHP(quint8 hp);

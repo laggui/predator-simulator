@@ -81,19 +81,34 @@ void QRunner::advance(int phase)
 {
 	if (phase == 0) {
 		// do nothing
-	}
-	else if (phase == 1) {
-		//static constexpr const qreal maxDeltaOrientation{ 12.5 }; // in °
-		//// Détermine la nouvelle orientation selon une variation aléatoire dans l'intervalle [-maxDeltaOrientation, maxDeltaOrientation]
-		//qreal newOrientationDegrees{ rotation() + QRandomGenerator::global()->bounded(2.0 * maxDeltaOrientation) - maxDeltaOrientation };
-		//qreal newOrientationRadians{ qDegreesToRadians(newOrientationDegrees) };
-		//// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
-		QPointF newPosition(pos() + QPointF(qCos(rotation()), qSin(rotation())) * mSpeed);
+		static constexpr const qreal maxDeltaOrientation{ 12.5 }; // in °
+		// Détermine la nouvelle orientation selon une variation aléatoire dans l'intervalle [-maxDeltaOrientation, maxDeltaOrientation]
+		qreal newOrientationDegrees{ rotation() + QRandomGenerator::global()->bounded(2.0 * maxDeltaOrientation) - maxDeltaOrientation };
+
+		//S'assure que le runner ne remonte pas en limitant la rotation a 180-0
+		if (newOrientationDegrees < 0)
+		{
+			newOrientationDegrees = 0 + (0 - newOrientationDegrees);
+		}
+		if (newOrientationDegrees > 180)
+		{
+			newOrientationDegrees = 180 - (newOrientationDegrees - 180);
+		}
+		qreal newOrientationRadians{ qDegreesToRadians(newOrientationDegrees) };
+		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+		QPointF newPosition(pos() + QPointF(qCos(newOrientationRadians), qSin(newOrientationRadians)) * mSpeed);
 		// Si la nouvelle position est à l'extérieur de la scène, la nouvelle position est téléportée à la région opposée de la scène
 		//warp(newPosition);
-
-		// Applique la nouvelle orientation et la nouvelle position
+		//setPos(newPosition.x(), newPosition.y());
 		//setRotation(newOrientationDegrees);
-		setPos(newPosition);
+		// store la nouvelle orientation et la nouvelle position en attendant la phase 1
+		setNextPos(newPosition.x(), newPosition.y());
+		setNextOrientation(newOrientationDegrees);
+	
+	}
+	else if (phase == 1) {
+		//applique les attributs calculé dans la phase 0
+		setPos(mNextAttributes.x, mNextAttributes.y);
+		setRotation(mNextAttributes.orientation);
 	}
 }
