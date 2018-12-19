@@ -25,9 +25,6 @@ public:
 	// Fonction virtuelle de QGraphicsItem (peut être "overridée") : fait un tick de simulation
 	void advance(int phase) override;
 
-	// Rebond permet de changer l'orientation d'un élément dynamique entrant en collision avec le mur
-	void bounce(QGraphicsItem * item);
-
 
 protected:
 	qreal mWallOrientation;
