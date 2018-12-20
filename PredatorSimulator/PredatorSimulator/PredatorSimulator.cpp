@@ -25,8 +25,7 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	mParametersQRunners{ new QParameters(sMaxNbrOfItems,"QRunners") },
 	mParametersQPredators{ new QParameters(sMaxNbrOfItems,"QPredators") },
 	mParametersQSuicideBombers{ new QParameters(sMaxNbrOfItems,"QSuicideBombers") },
-	mControlBar{ new QControlBar(Qt::Vertical) },
-	mEcosystem{ new QEcosystem(sTimerInterval, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height()) }
+	mControlBar{ new QControlBar(Qt::Vertical) }
 {
 	ui.setupUi(this);
 
@@ -70,11 +69,7 @@ void PredatorSimulator::startSimulation()
 
 
 	// Met un item rectangulaire pour bien voir les limites de la scène
-	// TO-DO: remplacer le background par mEcosystem [DONE]
-	//QGraphicsRectItem * background{ new QGraphicsRectItem(mGraphicsScene.sceneRect()) };
-	//background->setPen(Qt::NoPen);
-	//background->setBrush(sSceneBackgroundColor);
-
+	mEcosystem =  new QEcosystem(sTimerInterval, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height());
 	mGraphicsScene.addItem(mEcosystem);
 
 	// Ajout des murs
@@ -105,7 +100,7 @@ void PredatorSimulator::startSimulation()
 			sSceneSize.width(),
 			wallWidth,
 			0,
-			-sSceneSize.height() / 2 + 20)); // En bas
+			-sSceneSize.height() / 2 + wallWidth)); // En bas
 
 	for (int i{ 0 }; i < mParametersQPredators->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
