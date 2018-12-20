@@ -1,10 +1,12 @@
 #include "QRunner.h"
-#include "qgraphicsscene.h"
+#include <QGraphicsScene>
 #include <QPainter>
 #include <QtMath>
 #include <QRandomGenerator>
 #include "QWall.h"
 #include "Random.h"
+
+const qreal QRunner::sSize = 4;
 
 QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, quint8 initialHealth, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
@@ -13,7 +15,7 @@ QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegree
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setScale(scale);
-	mShape.setRect(2, 2, 4, 4);
+	mShape.setRect(-sSize / 2, -sSize / 2, sSize, sSize);
 
 }
 
@@ -91,7 +93,7 @@ void QRunner::clone()
 
 QRectF QRunner::boundingRect() const
 {
-	return QRectF(mShape);
+	return mShape;
 }
 
 void QRunner::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -103,7 +105,6 @@ void QRunner::paint(QPainter * painter, const QStyleOptionGraphicsItem * option,
 
 void QRunner::advance(int phase)
 {
-	qreal test; 
 	if (phase == 0) {
 		//calcul de la prochaine position
 		QPointF newPosition(pos() + QPointF(qCos(qDegreesToRadians(rotation()))*mSpeed, qSin(qDegreesToRadians(rotation())) * mSpeed));

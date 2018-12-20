@@ -38,6 +38,8 @@ private:
 	quint8 mHealthPoints;
 	// Les prochains attributs
 	RunnerAttributes mNextAttributes;
+
+	static const qreal sSize;
 };
 
 #endif // !Q_RUNNER_H
