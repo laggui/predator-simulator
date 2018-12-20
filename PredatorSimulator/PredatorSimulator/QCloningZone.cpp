@@ -7,7 +7,7 @@
 
 
 QCloningZone::QCloningZone( QPointF const & topLeft, qreal width, qreal height, qreal orientation,
-	QBrush const & brush, qreal yStartPos, QGraphicsItem * parent)
+	qreal yStartPos, QBrush const & brush,  QGraphicsItem * parent)
 	: QWall(topLeft, width, height, orientation, brush, parent), mYStartPos{ yStartPos }
 {
 	mWallOrientation = orientation;
@@ -33,7 +33,7 @@ void QCloningZone::advance(int phase)
 				// Les QPredator ne devraient jamais entrés en collision avec la clonning zone
 			}
 			else if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
-				runnerObj->bounce(mWallOrientation);
+				cloneAndWarp(dynamic_cast<QRunner*>(item));
 			}
 			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
 				bomberObj->bounce(mWallOrientation);

@@ -17,11 +17,19 @@ QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegree
 
 }
 
-//QRunner::QRunner(QRunner & runnerToCopy)
-//	: QRunner(runnerToCopy.pos(), runnerToCopy.rotation(), runnerToCopy.mSpeed, runnerToCopy.scale(), runnerToCopy.mHealthPoints, runnerToCopy.mBrush)
-//{
-//	mNextAttributes = runnerToCopy.mNextAttributes;
-//}
+QRunner& QRunner::operator=(QRunner & runnerToCopy)
+{
+	if (&runnerToCopy != this) {
+		setPos(runnerToCopy.pos());
+		setRotation(runnerToCopy.rotation());
+		mSpeed = runnerToCopy.mSpeed;
+		setScale(runnerToCopy.scale());
+		mHealthPoints = runnerToCopy.mHealthPoints;
+		mBrush = runnerToCopy.mBrush;
+		mNextAttributes = runnerToCopy.mNextAttributes;
+	}
+	return *this;
+}
 
 void QRunner::setHP(quint8 hp)
 {
@@ -74,9 +82,11 @@ void QRunner::clone()
 {
 	qreal rotationModifier = 90.0;
 	QGraphicsScene * gScene = scene();
-	QRunner * runnerToCopy = this;
-	runnerToCopy->bounce(rotationModifier);
-	gScene->addItem(runnerToCopy);
+	QRunner * newRunner{ new QRunner };
+	*newRunner = *this;
+	newRunner->setPos(mNextAttributes.x, mNextAttributes.y);
+	newRunner->bounce(rotationModifier);
+	gScene->addItem(newRunner);
 }
 
 QRectF QRunner::boundingRect() const

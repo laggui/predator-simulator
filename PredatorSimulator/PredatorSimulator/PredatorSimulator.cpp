@@ -10,6 +10,7 @@
 #include "QSuicideBomber.h"
 #include "QRunner.h"
 #include "QWall.h"
+#include "QCloningZone.h"
 #include "QEcosystem.h"
 #include "Random.h"
 
@@ -98,6 +99,14 @@ void PredatorSimulator::startSimulation()
 	//		sSceneSize.width(),
 	//		wallWidth)); // En haut
 
+	mGraphicsScene.addItem(
+		new QCloningZone(
+			QPointF(-sSceneSize.width() / 2, sSceneSize.height() / 2),
+			sSceneSize.width(),
+			wallWidth,
+			0,
+			-sSceneSize.height() / 2 + 20));
+
 	//for (int i{ 0 }; i < mParametersQPredators->nbrOfItems(); ++i) {
 	//	mGraphicsScene.addItem(
 	//		// Tous les litéraux ici devraient être créés dans des constantes symboliques!
@@ -129,7 +138,7 @@ void PredatorSimulator::startSimulation()
 			new QRunner(
 				QPointF(random(-sSceneSize.width() / 2, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2)+20),		// position En haut de la boites
 				random(20, 160),						// Orienté vers le bas rotation 0 = vers la droite
-				1,		//vitesse
+				5,		//vitesse
 				3.0,		//scale
 				Qt::green
 			));

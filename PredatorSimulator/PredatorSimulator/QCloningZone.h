@@ -6,7 +6,7 @@ class QCloningZone : public QWall
 {
 public:
 	QCloningZone(QPointF const & topLeft = QPointF(), qreal width = 0, qreal height = 0, qreal orientation = 0,
-				 QBrush const & brush = Qt::yellow, qreal yStartPos = 0, QGraphicsItem * parent = nullptr);
+		qreal yStartPos = 0, QBrush const & brush = Qt::yellow, QGraphicsItem * parent = nullptr);
 
 
 	// Fonction virtuelle de QGraphicsItem (peut être "overridée") : fait un tick de simulation
