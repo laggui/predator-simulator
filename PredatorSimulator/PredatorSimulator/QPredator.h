@@ -49,6 +49,9 @@ protected:
 	// Fonctions mathématiques utilitaires servant à réaliser la "téléportation" : devraient être ailleurs.
 	static qreal warp(qreal value, qreal begin, qreal end);
 	void warp(QPointF & point);
+private:
+	static const qreal minScale;
+	static const qreal maxScale;
 };
 
 #endif // !Q_PREDATOR_H

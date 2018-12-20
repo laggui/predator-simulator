@@ -93,11 +93,11 @@ void PredatorSimulator::startSimulation()
 			sSceneSize.height(),
 			90)); // Droite
 
-	//mGraphicsScene.addItem(
-	//	new QWall(
-	//		QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
-	//		sSceneSize.width(),
-	//		wallWidth)); // En haut
+	mGraphicsScene.addItem(
+		new QWall(
+			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
+			sSceneSize.width(),
+			wallWidth)); // En haut
 
 	mGraphicsScene.addItem(
 		new QCloningZone(
@@ -105,38 +105,38 @@ void PredatorSimulator::startSimulation()
 			sSceneSize.width(),
 			wallWidth,
 			0,
-			-sSceneSize.height() / 2 + 20));
+			-sSceneSize.height() / 2 + 20)); // En bas
 
-	//for (int i{ 0 }; i < mParametersQPredators->nbrOfItems(); ++i) {
-	//	mGraphicsScene.addItem(
-	//		// Tous les litéraux ici devraient être créés dans des constantes symboliques!
-	//		new QPredator(
-	//			QPointF(0, -sSceneSize.height() / 2 + (i + 1) * (sSceneSize.height() / (mParametersQPredators->nbrOfItems() + 1))),	// ils sont tous à l'origine au départ!
-	//			i%2*180,			// orientation aléatoire
-	//			random(1.0, 10.0),			// vitesse aléatoire entre 1 et 10
-	//			random(5.0, 15.0),			// taille aléatoire entre 5 et 15
-	//			25,							// dommage
-	//			0,							// timeNoKill
-	//			Qt::red));			// couleur aléatoire
-	//}
+	for (int i{ 0 }; i < mParametersQPredators->nbrOfItems(); ++i) {
+		mGraphicsScene.addItem(
+			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
+			new QPredator(
+				QPointF(0, (-sSceneSize.height() / 2) + ((i + 1) * (sSceneSize.height() / (mParametersQPredators->nbrOfItems() + 1)))),	// distribués uniformément sur l'axe y
+				i%2*180,			// orientation aléatoire
+				random(1.0, 10.0),			// vitesse aléatoire entre 1 et 10
+				random(5.0, 15.0),			// taille aléatoire entre 5 et 15
+				1,							// dommage
+				0,							// timeNoKill
+				Qt::red));			// couleur aléatoire
+	}
 
-	//for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
-	//	mGraphicsScene.addItem(
-	//		// Tous les litéraux ici devraient être créés dans des constantes symboliques!
-	//		new QSuicideBomber(
-	//			QPointF(random(-sSceneSize.width() / 2, sSceneSize.width() / 2 - wallWidth), -sSceneSize.height() / 2),	// En haut de la boites
-	//			90.0,																										// Orienté vers le bas
-	//			random(1.0, 10.0),																						// vitesse aléatoire entre 1 et 10
-	//			20.0,																										// Taille
-	//			0.5,																									// dommage
-	//			Qt::white));																								// bleu
-	//}
+	for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
+		mGraphicsScene.addItem(
+			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
+			new QSuicideBomber(
+				QPointF(random(-sSceneSize.width() / 2 + wallWidth, sSceneSize.width() / 2 - wallWidth), -sSceneSize.height() / 2),	// En haut de la boites
+				90.0,																										// Orienté vers le bas
+				random(1.0, 10.0),																						// vitesse aléatoire entre 1 et 10
+				20.0,																										// Taille
+				0.5,																									// dommage
+				Qt::white));																								// bleu
+	}
 
 	for (int i{ 0 }; i < mParametersQRunners->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
 			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
 			new QRunner(
-				QPointF(random(-sSceneSize.width() / 2, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2)+20),		// position En haut de la boites
+				QPointF(random(-sSceneSize.width() / 2  + wallWidth, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2)+20),		// position En haut de la boites
 				random(20, 160),						// Orienté vers le bas rotation 0 = vers la droite
 				5,		//vitesse
 				3.0,		//scale

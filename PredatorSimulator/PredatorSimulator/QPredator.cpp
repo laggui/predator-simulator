@@ -1,9 +1,14 @@
 #include "QPredator.h"
+#include "QRunner.h"
+#include "QSuicideBomber.h"
 #include <QPainter>
 #include <QtMath>
 #include <QRandomGenerator>
 
 #include <QGraphicsScene>
+
+const qreal QPredator::minScale{ 5 };
+const qreal QPredator::maxScale{ 25 };
 
 QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, quint8 damage, quint8 timeNoKill, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
@@ -14,6 +19,7 @@ QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDe
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setScale(scale);
+	setNextScale(scale);
 }
 
 void QPredator::setDamage(quint8 damage)
@@ -81,23 +87,32 @@ void QPredator::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 void QPredator::advance(int phase)
 {
 	if (phase == 0) {
-		// do nothing
+		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+		QPointF newPosition(pos() + QPointF(qCos(qDegreesToRadians(rotation()))*mSpeed, qSin(qDegreesToRadians(rotation())) * mSpeed));
+		// store la nouvelle orientation et la nouvelle position en attendant la phase 1
+		setNextPos(newPosition.x(), newPosition.y());
+		setNextOrientation(rotation());
+
+		// Récupérer les items qui sont en collision
+		QList<QGraphicsItem *> collidingObjects = collidingItems();
+
+		// Itérer à travers les objets en collision
+		foreach(QGraphicsItem *item, collidingObjects) {
+			if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
+				runnerObj->setHP(runnerObj->getHP() - mDamage);
+				if (scale() < maxScale) { setNextScale(scale() + 1); }
+			}
+			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
+				setNextScale(scale() * bomberObj->getDamage());
+				if (mNextAttributes.scaleFactor < minScale) { setNextScale(minScale); }
+			}
+		}
 	}
 	else if (phase == 1) {
-		//static constexpr const qreal maxDeltaOrientation{ 12.5 }; // in °
-		// Détermine la nouvelle orientation selon une variation aléatoire dans l'intervalle [-maxDeltaOrientation, maxDeltaOrientation]
-		//qreal newOrientationDegrees{ rotation() + QRandomGenerator::global()->bounded(2.0 * maxDeltaOrientation) - maxDeltaOrientation };
-		//qreal newOrientationRadians{ qDegreesToRadians(newOrientationDegrees) };
-		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
-		//QPointF newPosition(pos() + QPointF(qCos(newOrientationRadians), qSin(newOrientationRadians)) * mSpeed);
-		qreal rot = rotation();
-		QPointF newPosition(pos() + QPointF(qCos(rotation()), qSin(rotation())) * mSpeed);
-		// Si la nouvelle position est à l'extérieur de la scène, la nouvelle position est téléportée à la région opposée de la scène
-		warp(newPosition);
-
-		// Applique la nouvelle orientation et la nouvelle position
-		//setRotation(newOrientationDegrees);
-		setPos(newPosition);
+		//applique les attributs calculé dans la phase 0
+		setPos(mNextAttributes.x, mNextAttributes.y);
+		setRotation(mNextAttributes.orientation);
+		setScale(mNextAttributes.scaleFactor);
 	}
 }
 

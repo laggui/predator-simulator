@@ -64,11 +64,15 @@ void QSuicideBomber::paint(QPainter * painter, const QStyleOptionGraphicsItem * 
 void QSuicideBomber::advance(int phase)
 {
 	if (phase == 0) {
-		// do nothing
+		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+		QPointF newPosition(pos() + QPointF(qCos(qDegreesToRadians(rotation()))*mSpeed, qSin(qDegreesToRadians(rotation())) * mSpeed));
+		// store la nouvelle orientation et la nouvelle position en attendant la phase 1
+		setNextPos(newPosition.x(), newPosition.y());
+		setNextOrientation(rotation());
 	}
 	else if (phase == 1) {
 		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
-		QPointF newPosition(pos() + QPointF(0, 1) * mSpeed);
-		setPos(newPosition);
+		setPos(mNextAttributes.x, mNextAttributes.y);
+		setRotation(mNextAttributes.orientation);
 	}
 }

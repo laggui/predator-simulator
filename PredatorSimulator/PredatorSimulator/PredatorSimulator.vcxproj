@@ -120,6 +120,7 @@
     <ClCompile Include="QColorBox.cpp" />
     <ClCompile Include="QControlBar.cpp" />
     <ClCompile Include="QDynamicObject.cpp" />
+    <ClCompile Include="QEcosystem.cpp" />
     <ClCompile Include="QParameters.cpp" />
     <ClCompile Include="QPredator.cpp" />
     <ClCompile Include="QRunner.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="QCloningZone.h" />
     <ClInclude Include="QColorBox.h" />
     <ClInclude Include="QDynamicObject.h" />
+    <ClInclude Include="QEcosystem.h" />
     <ClInclude Include="QPredator.h" />
     <ClInclude Include="QRunner.h" />
     <ClInclude Include="QSuicideBomber.h" />
