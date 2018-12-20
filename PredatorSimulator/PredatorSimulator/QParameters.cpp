@@ -10,7 +10,7 @@ QParameters::QParameters(size_t maxItems, QString nom, QWidget * parent)
 	: QWidget(parent),
 	mNbrOfItems{ new QSpinBox }
 {
-	const size_t minMaxNbr{ 10 };
+	const size_t minMaxNbr{ 5 };
 
 	mNbrOfItems->setRange(1, qMax(static_cast<size_t>(minMaxNbr), maxItems));
 	mNbrOfItems->setValue(minMaxNbr);
