@@ -105,40 +105,11 @@ void QRunner::advance(int phase)
 {
 	qreal test; 
 	if (phase == 0) {
-		// do nothing
-		//static constexpr const qreal maxDeltaOrientation{ 12.5 }; // in °
-		// Détermine la nouvelle orientation selon une variation aléatoire dans l'intervalle [-maxDeltaOrientation, maxDeltaOrientation]
-		//qreal newOrientationDegrees{ rotation() + QRandomGenerator::global()->bounded(2.0 * maxDeltaOrientation) - maxDeltaOrientation };
-//		test = random(0, 1);
-		//S'assure que le runner ne remonte pas en limitant la rotation a 180-0
-		//if (newOrientationDegrees < 0)
-		//{
-		//	newOrientationDegrees = 0 + (0 - newOrientationDegrees);
-		//}
-		//if (newOrientationDegrees > 180)
-		//{
-		//	newOrientationDegrees = 180 - (newOrientationDegrees - 180);
-		//}
-		//qreal orientationRadians{ qDegreesToRadians(newOrientationDegrees) };
-		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+		//calcul de la prochaine position
 		QPointF newPosition(pos() + QPointF(qCos(qDegreesToRadians(rotation()))*mSpeed, qSin(qDegreesToRadians(rotation())) * mSpeed));
-		// store la nouvelle orientation et la nouvelle position en attendant la phase 1
+		// assignation de la nouvelle orientation et de la nouvelle position en attendant la phase 1
 		setNextPos(newPosition.x(), newPosition.y());
 		setNextOrientation(rotation());
-
-
-	
-		// Récupérer les items qui sont en collision
-		QList<QGraphicsItem *> collidingItemsList = collidingItems(); // Par défaut: les items qui overlap avec la shape de l'item et les items qui touchent au contour de l'item
-
-		// Itérer à travers les items et vérifier leur type
-		/*foreach(QGraphicsItem *item, collidingItemsList) {
-			if (auto classeUn = dynamic_cast<QWall*>(item)) {
-				bounce(rotation()-90);
-			}
-			
-		}
-*/
 
 	}
 	else if (phase == 1) {
