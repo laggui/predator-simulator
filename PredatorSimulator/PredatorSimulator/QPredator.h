@@ -13,16 +13,18 @@ public:
 
 	// Mutateurs
 	void setDamage(quint8 damage);
+	void setSize(qreal size);
 	void resetTimeNoKill();
 	void incrementTimeNoKill();
 	void setNextPos(qreal x, qreal y) override;
 	void setNextOrientation(qreal orientation) override;
 	void setNextTimeNoKill(quint8 timeNoKill);
-	void setNextScale(qreal scale);
+	void setNextSize(qreal size);
 	
 	// Accesseurs
-	quint8 getDamage() const;
-	quint8 getTimeNoKill() const;
+	quint8 damage() const;
+	quint8 timeNoKill() const;
+	qreal size() const;
 
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
 	void clone() override;
@@ -40,18 +42,16 @@ protected:
 	quint8 mDamage;
 	// Le temps depuis sa dernière victime
 	quint8 mTimeNoKill;
+	// La grosseur
+	qreal mSize;
 	// Les prochains attributs
 	PredatorAttributes mNextAttributes;
 
 	// Élimine l'entité avec laquelle elle entre en contact
 	void kill(QDynamicObject* object);
-
-	// Fonctions mathématiques utilitaires servant à réaliser la "téléportation" : devraient être ailleurs.
-	static qreal warp(qreal value, qreal begin, qreal end);
-	void warp(QPointF & point);
 private:
-	static const qreal minScale;
-	static const qreal maxScale;
+	static const qreal minSize;
+	static const qreal maxSize;
 };
 
 #endif // !Q_PREDATOR_H

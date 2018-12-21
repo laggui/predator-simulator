@@ -6,31 +6,28 @@
 #include "QWall.h"
 #include "Random.h"
 
-const qreal QRunner::sSize = 4;
-
-QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, quint8 initialHealth, QBrush const & brush, QGraphicsItem * parent)
+QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal size, quint8 initialHealth, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
 	  mHealthPoints{ initialHealth }
 {
+	setSize(size);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
-	setScale(scale);
-	mShape.setRect(-sSize / 2, -sSize / 2, sSize, sSize);
-
+	mShape.setRect(-mSize / 2, -mSize / 2, mSize, mSize);
+	setNextPos(initialPosition.x(), initialPosition.y());
 }
 
-QRunner& QRunner::operator=(QRunner & runnerToCopy)
+QRunner::QRunner(const QRunner & runner)
 {
-	if (&runnerToCopy != this) {
-		setPos(runnerToCopy.pos());
-		setRotation(runnerToCopy.rotation());
-		mSpeed = runnerToCopy.mSpeed;
-		setScale(runnerToCopy.scale());
-		mHealthPoints = runnerToCopy.mHealthPoints;
-		mBrush = runnerToCopy.mBrush;
-		mNextAttributes = runnerToCopy.mNextAttributes;
-	}
-	return *this;
+	setPos(runner.pos());
+	setRotation(runner.rotation());
+	mSpeed = runner.mSpeed;	
+	mHealthPoints = runner.mHealthPoints;
+	mBrush = runner.mBrush;
+	mNextAttributes = runner.mNextAttributes;
+	// Changer l'orientation
+	mNextAttributes.orientation = runner.mNextAttributes.orientation + random(-5, 5);
+	mShape = QRectF(runner.mShape);
 }
 
 void QRunner::setHP(quint8 hp)
@@ -57,6 +54,11 @@ void QRunner::setHP(quint8 hp)
 	}
 }
 
+void QRunner::setSize(qreal size)
+{
+	mSize = qMax(1.0, size);
+}
+
 
 
 void QRunner::setNextPos(qreal x, qreal y)
@@ -75,20 +77,20 @@ void QRunner::setNextHP(quint8 hp)
 	mNextAttributes.healthPoints = hp;
 }
 
-quint8 QRunner::getHP() const
+quint8 QRunner::HP() const
 {
 	return mHealthPoints;
 }
 
+qreal QRunner::size() const
+{
+	return mSize;
+}
+
 void QRunner::clone()
 {
-	qreal rotationModifier = 90.0;
-	QGraphicsScene * gScene = scene();
-	QRunner * newRunner{ new QRunner };
-	*newRunner = *this;
-	newRunner->setPos(mNextAttributes.x, mNextAttributes.y);
-	newRunner->bounce(rotationModifier);
-	gScene->addItem(newRunner);
+	QRunner * newRunner{ new QRunner(*this) };
+	scene()->addItem(newRunner);
 }
 
 QRectF QRunner::boundingRect() const
@@ -106,16 +108,19 @@ void QRunner::paint(QPainter * painter, const QStyleOptionGraphicsItem * option,
 void QRunner::advance(int phase)
 {
 	if (phase == 0) {
-		//calcul de la prochaine position
-		QPointF newPosition(pos() + QPointF(qCos(qDegreesToRadians(rotation()))*mSpeed, qSin(qDegreesToRadians(rotation())) * mSpeed));
-		// assignation de la nouvelle orientation et de la nouvelle position en attendant la phase 1
-		setNextPos(newPosition.x(), newPosition.y());
-		setNextOrientation(rotation());
-
+		// Vérifier si la position a déjà été modifiée (collision avec un mur)
+		if (mNextAttributes.x == pos().x() && mNextAttributes.y == pos().y()) {
+			//calcul de la prochaine position
+			QPointF newPosition(pos() + QPointF(qCos(qDegreesToRadians(rotation()))*mSpeed, qSin(qDegreesToRadians(rotation())) * mSpeed));
+			// assignation de la nouvelle orientation et de la nouvelle position en attendant la phase 1
+			setNextPos(newPosition.x(), newPosition.y());
+			setNextOrientation(rotation());
+		}
 	}
 	else if (phase == 1) {
 		//applique les attributs calculé dans la phase 0
 		setPos(mNextAttributes.x, mNextAttributes.y);
 		setRotation(mNextAttributes.orientation);
+		setHP(mNextAttributes.healthPoints);
 	}
 }

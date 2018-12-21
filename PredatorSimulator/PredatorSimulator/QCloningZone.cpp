@@ -13,7 +13,7 @@ QCloningZone::QCloningZone( QPointF const & topLeft, qreal width, qreal height, 
 
 void QCloningZone::cloneAndWarp(QRunner * runner)
 {
-	runner->setNextPos(runner->pos().x(), mYStartPos + runner->scale());
+	runner->setNextPos(runner->pos().x(), mYStartPos + runner->size());
 	runner->clone();
 }
 

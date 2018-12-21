@@ -10,17 +10,19 @@ public:
 	// TO-DO: constructeur avec des paramètres (par défaut)
 	QRunner(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
 			quint8 initialHealth = 3, QBrush const & brush = Qt::green, QGraphicsItem * parent = nullptr);
-
-	QRunner& operator=(QRunner & runnerToCopy);
+	// Constructeur de copie
+	QRunner(const QRunner & runner);
 
 	// Mutateurs
 	void setHP(quint8 hp);
+	void setSize(qreal size);
 	void setNextHP(quint8 hp);
 	void setNextPos(qreal x, qreal y) override;
 	void setNextOrientation(qreal orientation) override;
 
 	// Accesseur
-	quint8 getHP() const;
+	quint8 HP() const;
+	qreal size() const;
 
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
 	void clone() override;
@@ -36,10 +38,10 @@ public:
 private:
 	// Les points de vie
 	quint8 mHealthPoints;
+	// La grosseur
+	qreal mSize;
 	// Les prochains attributs
 	RunnerAttributes mNextAttributes;
-
-	static const qreal sSize;
 };
 
 #endif // !Q_RUNNER_H

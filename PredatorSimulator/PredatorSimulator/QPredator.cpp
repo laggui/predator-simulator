@@ -7,24 +7,30 @@
 
 #include <QGraphicsScene>
 
-const qreal QPredator::minScale{ 5 };
-const qreal QPredator::maxScale{ 25 };
+const qreal QPredator::minSize{ 1 };
+const qreal QPredator::maxSize{ 25 };
 
-QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal scale, quint8 damage, quint8 timeNoKill, QBrush const & brush, QGraphicsItem * parent)
+QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal size, quint8 damage, quint8 timeNoKill, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
 	  mDamage{ damage },
 	  mTimeNoKill{ timeNoKill }
 {
-	mShape.setRect(2, 2, 4, 4);
+	setSize(size);
+	mShape.setRect(-mSize/2, -mSize /2, mSize, mSize);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
-	setScale(scale);
-	setNextScale(scale);
+	setNextSize(mSize);
+	setNextPos(initialPosition.x(), initialPosition.y());
 }
 
 void QPredator::setDamage(quint8 damage)
 {
 	mDamage = damage;
+}
+
+void QPredator::setSize(qreal size)
+{
+	mSize = qMax(1.0, size);
 }
 
 void QPredator::resetTimeNoKill()
@@ -53,28 +59,34 @@ void QPredator::setNextTimeNoKill(quint8 timeNoKill)
 	mNextAttributes.timeNoKill = timeNoKill;
 }
 
-void QPredator::setNextScale(qreal scale)
+void QPredator::setNextSize(qreal size)
 {
-	mNextAttributes.scaleFactor = scale;
+	mNextAttributes.size = size;
 }
 
-quint8 QPredator::getDamage() const
+quint8 QPredator::damage() const
 {
 	return mDamage;
 }
 
-quint8 QPredator::getTimeNoKill() const
+quint8 QPredator::timeNoKill() const
 {
 	return mTimeNoKill;
 }
 
+qreal QPredator::size() const
+{
+	return mSize;
+}
+
 void QPredator::clone()
 {
+	// Prédateur ne se clone pas. Il ne devrait même pas entrer en contact avec la zone de clonage.
 }
 
 QRectF QPredator::boundingRect() const
 {
-	return QRectF(mShape);
+	return mShape;
 }
 
 void QPredator::paint(QPainter * painter, const QStyleOptionGraphicsItem * option, QWidget * widget)
@@ -87,24 +99,26 @@ void QPredator::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 void QPredator::advance(int phase)
 {
 	if (phase == 0) {
-		// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
-		QPointF newPosition(pos() + QPointF(qCos(qDegreesToRadians(rotation()))*mSpeed, qSin(qDegreesToRadians(rotation())) * mSpeed));
-		// store la nouvelle orientation et la nouvelle position en attendant la phase 1
-		setNextPos(newPosition.x(), newPosition.y());
-		setNextOrientation(rotation());
-
+		// Vérifier si la position a déjà été modifiée (collision avec un mur)
+		if (mNextAttributes.x == pos().x() && mNextAttributes.y == pos().y()) {
+			// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+			QPointF newPosition(pos().x() + qCos(qDegreesToRadians(rotation()))*mSpeed, pos().y());
+			// store la nouvelle orientation et la nouvelle position en attendant la phase 1
+			setNextPos(newPosition.x(), newPosition.y());
+			setNextOrientation(rotation());
+		}
 		// Récupérer les items qui sont en collision
 		QList<QGraphicsItem *> collidingObjects = collidingItems();
 
 		// Itérer à travers les objets en collision
 		foreach(QGraphicsItem *item, collidingObjects) {
 			if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
-				runnerObj->setHP(runnerObj->getHP() - mDamage);
-				if (scale() < maxScale) { setNextScale(scale() + 1); }
+				runnerObj->setNextHP(runnerObj->HP() - mDamage);
+				if (mSize < maxSize) { setNextSize(mSize + 1); }
 			}
 			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
-				setNextScale(scale() * bomberObj->getDamage());
-				if (mNextAttributes.scaleFactor < minScale) { setNextScale(minScale); }
+				setNextSize(mSize - bomberObj->damage());
+				if (mNextAttributes.size < minSize) { setNextSize(minSize); }
 			}
 		}
 	}
@@ -112,20 +126,11 @@ void QPredator::advance(int phase)
 		//applique les attributs calculé dans la phase 0
 		setPos(mNextAttributes.x, mNextAttributes.y);
 		setRotation(mNextAttributes.orientation);
-		setScale(mNextAttributes.scaleFactor);
+		setSize(mNextAttributes.size);
+		mTimeNoKill = mNextAttributes.timeNoKill;
 	}
 }
 
 void QPredator::kill(QDynamicObject * object)
 {
-}
-
-qreal QPredator::warp(qreal value, qreal begin, qreal end) {
-	const qreal width = end - begin;
-	return value - qFloor((value - begin) / width) * width;
-}
-
-void QPredator::warp(QPointF & point) {
-	point.setX(warp(point.x(), scene()->sceneRect().left(), scene()->sceneRect().right()));
-	point.setY(warp(point.y(), scene()->sceneRect().top(), scene()->sceneRect().bottom()));
 }
