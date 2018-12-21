@@ -7,7 +7,7 @@
 class QEcosystem : public QBasicItem<QRectF>
 {
 public:
-	QEcosystem(unsigned int timerInterval, unsigned int timeAlive = 0, QPointF const & sceneCenter = QPointF(),
+	QEcosystem(QSize spawnSize, unsigned int timerInterval, unsigned int timeAlive = 0, QPointF const & sceneCenter = QPointF(),
 			   qreal width = 0, qreal height = 0, QBrush const & brush = Qt::darkBlue, QGraphicsItem * parent = nullptr);
 
 	// Mutateur
@@ -37,6 +37,7 @@ private:
 	static const qreal sMembersSize;
 	static const qreal sMembersSpeed;
 	static const quint8 sRunnerHP;
+	static const qreal sRunnersOrientationOffset;
 	static const qreal sBomberDamage;
 	static const qreal sBomberOrientation;
 	static const qreal sPredatorDecrement;
