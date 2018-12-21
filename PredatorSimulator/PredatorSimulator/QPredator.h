@@ -48,7 +48,7 @@ protected:
 	PredatorAttributes mNextAttributes;
 
 	// Élimine l'entité avec laquelle elle entre en contact
-	void kill(QDynamicObject* object);
+	void kill(QGraphicsItem * item);
 private:
 	static const qreal minSize;
 	static const qreal maxSize;

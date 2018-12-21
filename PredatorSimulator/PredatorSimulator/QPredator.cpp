@@ -116,6 +116,9 @@ void QPredator::advance(int phase)
 				quint8 nextHP =  runnerObj->HP() - mDamage;
 				if (nextHP > 0) {
 					runnerObj->setNextHP(nextHP);
+					// Changer sa position pour éviter les collisions multiples répétées
+					/*runnerObj->setNextPos(runnerObj->pos().x() + qCos(qDegreesToRadians(runnerObj->rotation()))*(mSize+runnerObj->size()),
+										  runnerObj->pos().y() + qSin(qDegreesToRadians(runnerObj->rotation()))*(mSize + runnerObj->size()));*/
 				}
 				else {
 					kill(runnerObj);
@@ -138,8 +141,10 @@ void QPredator::advance(int phase)
 	}
 }
 
-void QPredator::kill(QDynamicObject * object)
+void QPredator::kill(QGraphicsItem * item)
 {
-	// remove from scene
-	// delete
+	// remove from scene mGraphicsScene
+	scene()->QGraphicsScene::removeItem(item);  // on retire l'item de la liste de la scene
+	delete item; // on supprime la mémoire allouée dynamiquement liée à l'item
+	resetTimeNoKill();
 }
