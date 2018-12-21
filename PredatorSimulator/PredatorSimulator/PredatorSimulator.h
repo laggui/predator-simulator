@@ -34,6 +34,7 @@ private:
 	QTimer mTimer;
 	QEcosystem * mEcosystem;
 
+	// Les constantes de la simulation
 	static const size_t sMaxNbrOfItems;
 	static const QSize sSceneSize;
 	static const QColor sSceneBackgroundColor;

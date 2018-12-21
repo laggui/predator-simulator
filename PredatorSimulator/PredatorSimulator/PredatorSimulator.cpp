@@ -64,8 +64,15 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 void PredatorSimulator::startSimulation()
 {
 	const quint8 wallWidth{ 20 };
-	const qreal runnerSize{ 10 };
-	const qreal objScale{ 10 };
+	const qreal membersSize{ 10 };
+	const qreal membersSpeedMin{ 1 };
+	const qreal membersSpeedMax{ 5 };
+	const qreal bombersDamage{ 5 };
+	const quint8 predatorsDamage{ 1 };
+	const quint8 runnersHP{ 3 };
+	const qreal runnersOrientationOffset{ 20 };
+	const qreal verticalOrientation{ 90 };
+	const qreal horizontalOrientation{ 0 };
 	// Vide la scène pour démarrer une nouvelle démo
 	mGraphicsScene.clear();
 
@@ -80,64 +87,61 @@ void PredatorSimulator::startSimulation()
 			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
 			wallWidth,
 			sSceneSize.height(),
-			90)); // Gauche
+			verticalOrientation)); // Gauche
 
 	mGraphicsScene.addItem(
 		new QWall(
 			QPointF(sSceneSize.width() / 2 - wallWidth, -sSceneSize.height() / 2),
 			wallWidth,
 			sSceneSize.height(),
-			90)); // Droite
+			verticalOrientation)); // Droite
 
 	mGraphicsScene.addItem(
 		new QWall(
 			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
 			sSceneSize.width(),
 			wallWidth,
-			0)); // En haut
+			horizontalOrientation)); // En haut
 
 	mGraphicsScene.addItem(
 		new QCloningZone(
 			QPointF(-sSceneSize.width() / 2, sSceneSize.height() / 2),
 			sSceneSize.width(),
 			wallWidth,
-			0,
+			horizontalOrientation,
 			-sSceneSize.height() / 2 + wallWidth)); // En bas
 
 	for (int i{ 0 }; i < mParametersQPredators->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
-			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
 			new QPredator(
 				QPointF(0, -(sSceneSize.height()/2 - wallWidth * 2) + i * (static_cast<qreal>(sSceneSize.height() - wallWidth * 2) / (mParametersQPredators->nbrOfItems()))),	// distribués uniformément sur l'axe y
 				(i % 2) * 180,			// orientation aléatoire
-				random(1.0, 5.0),			// vitesse aléatoire entre 1 et 5
-				random(10.0, 20.0),			// taille aléatoire entre 2 et 10
-				1,							// dommage
+				random(membersSpeedMin, membersSpeedMax),			// vitesse aléatoire entre 1 et 5
+				random(membersSize, 2 * membersSize),			// taille aléatoire entre 2 et 10
+				predatorsDamage,							// dommage
 				0,							// timeNoKill
 				Qt::red));			// couleur aléatoire
 	}
 
 	for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
-			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
 			new QSuicideBomber(
-				QPointF(random(-sSceneSize.width() / 2 + wallWidth, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2) + wallWidth + objScale),	// En haut de la boites
-				90.0,																										// Orienté vers le bas
-				random(1.0, 5.0),																						// vitesse aléatoire entre 1 et 10
-				objScale,																										// Taille
-				5,																									// dommage
+				QPointF(random(-sSceneSize.width() / 2 + wallWidth, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2) + wallWidth + membersSize),	// En haut de la boites
+				verticalOrientation,																										// Orienté vers le bas
+				random(membersSpeedMin, membersSpeedMax),																						// vitesse aléatoire entre 1 et 10
+				membersSize,																										// Taille
+				bombersDamage,																									// dommage
 				Qt::white));																								// bleu
 	}
 
 	for (int i{ 0 }; i < mParametersQRunners->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
-			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
 			new QRunner(
-				QPointF(random(-sSceneSize.width() / 2  + wallWidth + runnerSize, sSceneSize.width() / 2 - wallWidth - runnerSize), (-sSceneSize.height() / 2) + wallWidth + runnerSize),		// position En haut de la boites
-				random(20, 160),						// Orienté vers le bas rotation 0 = vers la droite
-				5,		//vitesse
-				runnerSize,		//size
-				3, // hp
+				QPointF(random(-sSceneSize.width() / 2  + wallWidth + membersSize, sSceneSize.width() / 2 - wallWidth - membersSize), (-sSceneSize.height() / 2) + wallWidth + membersSize),		// position En haut de la boites
+				random(0 + runnersOrientationOffset, 180 - runnersOrientationOffset),						// Orienté vers le bas rotation 0 = vers la droite
+				membersSpeedMax,		//vitesse
+				membersSize,		//size
+				runnersHP, // hp
 				Qt::green
 			));
 
