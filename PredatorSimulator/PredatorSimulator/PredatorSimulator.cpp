@@ -70,7 +70,7 @@ void PredatorSimulator::startSimulation()
 
 
 	// Met un item rectangulaire pour bien voir les limites de la scène
-	mEcosystem =  new QEcosystem(sTimerInterval, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height());
+	mEcosystem =  new QEcosystem(sTimerInterval*10, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height());
 	mGraphicsScene.addItem(mEcosystem);
 
 	// Ajout des murs
@@ -132,7 +132,7 @@ void PredatorSimulator::startSimulation()
 		mGraphicsScene.addItem(
 			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
 			new QRunner(
-				QPointF(random(-sSceneSize.width() / 2  + wallWidth, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2) + wallWidth + runnerSize),		// position En haut de la boites
+				QPointF(random(-sSceneSize.width() / 2  + wallWidth + runnerSize, sSceneSize.width() / 2 - wallWidth - runnerSize), (-sSceneSize.height() / 2) + wallWidth + runnerSize),		// position En haut de la boites
 				random(20, 160),						// Orienté vers le bas rotation 0 = vers la droite
 				5,		//vitesse
 				runnerSize,		//size
