@@ -26,7 +26,7 @@ QRunner::QRunner(const QRunner & runner)
 	mBrush = runner.mBrush;
 	mNextAttributes = runner.mNextAttributes;
 	// Changer l'orientation
-	mNextAttributes.orientation = runner.mNextAttributes.orientation + random(-5, 5);
+	mNextAttributes.orientation = 180 - runner.mNextAttributes.orientation; // flip orientation
 	mShape = QRectF(runner.mShape);
 }
 
