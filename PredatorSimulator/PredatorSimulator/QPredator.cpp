@@ -7,7 +7,7 @@
 
 #include <QGraphicsScene>
 
-const qreal QPredator::sMinSize{ 10 };
+const qreal QPredator::sMinSize{ 5 };
 const qreal QPredator::sMaxSize{ 75 };
 const qreal QPredator::sSizeIncrement{ 5 };
 
@@ -30,7 +30,7 @@ void QPredator::setDamage(quint8 damage)
 
 void QPredator::setSize(qreal size)
 {
-	mSize = qMax(1.0, size);
+	mSize = qMax(sMinSize, size);
 	mShape.setRect(-mSize / 2, -mSize / 2, mSize, mSize);
 }
 
@@ -125,7 +125,12 @@ void QPredator::advance(int phase)
 					}
 					else {
 						kill(runnerObj);
-						if (mSize < sMaxSize) setNextSize(mSize + sSizeIncrement);
+						if (mSize + sSizeIncrement < sMaxSize) {
+							setNextSize(mSize + sSizeIncrement);
+						}
+						else {
+							setNextSize(sMaxSize);
+						}
 					}
 				}
 				
@@ -133,7 +138,6 @@ void QPredator::advance(int phase)
 			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
 				setNextSize(mSize - bomberObj->damage());
 				kill(bomberObj);
-				if (mNextAttributes.size < sMinSize) { setNextSize(sMinSize); }
 			}
 		}
 	}
