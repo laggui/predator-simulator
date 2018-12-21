@@ -58,4 +58,17 @@ void NotreClasse::advance(int phase)
 }
 ```
 
+## TO-DO
+
+- [ ] PredatorSimulator
+- [x] QBasicItem
+	- [x] QWall
+		- [x] QCloningZone
+	- [x] QDynamicObject
+		- [x] QRunner
+		- [ ] QPredator: manque kill()
+		- [ ] QSuicideBomber : arranger la shape (semble avoir un fuck dans la simulation)
+	- [ ] QEcosytem : manque génération de runners ou bombers dans advance (en commentaire)
+- [ ] QActOfGod: on a rien encore, il nous faut un bouton qui va faire une action
+
 
