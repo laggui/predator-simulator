@@ -22,7 +22,6 @@ protected:
 	// La couleur de fond
 	QBrush mBrush;
 	// La forme (attribut template)
-	//QPolygonF mShape;
 	T mShape;
 };
 
