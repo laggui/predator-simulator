@@ -2,7 +2,6 @@
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QtMath>
-#include <QRandomGenerator>
 #include "QWall.h"
 #include "Random.h"
 
@@ -25,7 +24,8 @@ QRunner::QRunner(const QRunner & runner)
 	mBrush = runner.mBrush;
 	mNextAttributes = runner.mNextAttributes;
 	// Changer l'orientation
-	mNextAttributes.orientation = 180 - runner.mNextAttributes.orientation; // flip orientation
+	mNextAttributes.orientation = qMin(355.0, 180.0 - runner.mNextAttributes.orientation + random(25.0)); // flip orientation
+	//mNextAttributes.x = 
 	mShape = QRectF(runner.mShape);
 }
 
