@@ -16,8 +16,6 @@ QRunner, QPredator et QSuicideBomber
 
 QWall et QCloningZone.
 
-Commentaire: est-ce qu'on devrait avoir une classe pour notre écosystème?
-
 ## Act Of God
 
 L'act of god va geler le déplacement des prédateurs pour un temps donné.
@@ -25,10 +23,6 @@ L'act of god va geler le déplacement des prédateurs pour un temps donné.
 ## Paramètres Initiaux
 
 On doit avoir des sélecteurs qui permettent de définir le nombre de QRunner, QPredator et QSuicideBomber (au minimum). Si on veut, on peut aussi définir des attributs initiaux pour ces classes (ex: vitesse, dommage).
-
-## Template
-
-Liste template pour des QDynamicObjects?
 
 ## Gestion de collision (interaction)
 
@@ -65,11 +59,13 @@ void NotreClasse::advance(int phase)
 	- [x] QWall
 		- [x] QCloningZone
 	- [x] QDynamicObject
-		- [x] QRunner (peut-être un fuck avec clone?)
-		- [x] QPredator: manque kill()
-		- [x] QSuicideBomber : arranger la shape (semble avoir un fuck dans la simulation)
-	- [ ] QEcosytem : manque génération de bombers dans advance (en commentaire)
-	- [x] QEcosytem : manque génération de runners dans advance (en commentaire)
+		- [x] QRunner
+		- [x] QPredator
+		- [x] QSuicideBomber
+	- [x] QEcosytem
 - [ ] QActOfGod: on a rien encore, il nous faut un bouton qui va faire une action
+
+- [ ] **Rapport**
+- [ ] **UML** (mettre à jour)
 
 
