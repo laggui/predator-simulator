@@ -7,8 +7,8 @@
 
 #include <QGraphicsScene>
 
-const qreal QPredator::minSize{ 1 };
-const qreal QPredator::maxSize{ 25 };
+const qreal QPredator::minSize{ 10 };
+const qreal QPredator::maxSize{ 50 };
 
 QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal size, quint8 damage, quint8 timeNoKill, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),

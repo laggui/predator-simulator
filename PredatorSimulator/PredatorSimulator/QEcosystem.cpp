@@ -49,7 +49,7 @@ void QEcosystem::advance(int phase)
 		 //Itérer à travers les objets et vérifier les prédateurs
 		foreach(QGraphicsItem *item, sceneItems) {
 			if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
-				if (predatorObj->timeNoKill() == mEvolveTime) {
+				if (predatorObj->timeNoKill() == (mEvolveTime/5)) {
 					// Diminuer la grosseur du prédateur
 					predatorObj->setNextSize(predatorObj->size() - 1);
 					predatorObj->setNextTimeNoKill(0);
@@ -57,7 +57,7 @@ void QEcosystem::advance(int phase)
 			}
 		}
 
-		if ((mTimeAlive %  (mEvolveTime/5)) == 0) {
+		if ((mTimeAlive %  (mEvolveTime/10)) == 0) {
 			// Un runner ou bomber nait (choix aléatoire, avec plus de chance que ce soit un runner)
 			if (random(5)) {
 				scene()->addItem(
@@ -70,9 +70,8 @@ void QEcosystem::advance(int phase)
 							Qt::green));
 			}
 			else {
-				/*scene()->addItem(
-					new QSuicideBomber()
-				);*/
+			/*	scene()->addItem(
+					new QSuicideBomber();*/
 			}
 		}
 	}
