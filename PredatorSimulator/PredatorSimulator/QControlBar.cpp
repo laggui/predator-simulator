@@ -1,6 +1,6 @@
 #include "QControlBar.h"
 
-
+#include <QMessageBox>
 #include <QLayout>
 #include <QPushButton>
 #include "QColorBox.h"
@@ -33,6 +33,7 @@ QControlBar::QControlBar(Qt::Orientation orientation, Alignment alignment, QWidg
 		mStartButton{ new QPushButton(mStartText) },
 		mPauseButton{ new QPushButton(mPauseText) },
 		mStepButton{ new QPushButton(mStepText) },
+		mAboutButton{new QPushButton("à propos")},
 		mStateMarkerColorBox{ new QColorBox },
 		mStateColor{ sDefaultStateColor[0], sDefaultStateColor[1], sDefaultStateColor[2], sDefaultStateColor[3] },
 		mBorderColor(sDefaultBorderColor)
@@ -47,7 +48,7 @@ QControlBar::QControlBar(Qt::Orientation orientation, Alignment alignment, QWidg
 		layout->addWidget(mStartButton);
 		layout->addWidget(mPauseButton);
 		layout->addWidget(mStepButton);
-		layout->addWidget(mStateMarkerColorBox);
+		layout->addWidget(mAboutButton);
 		if (alignment != Alignment::TowardLast) {
 			static_cast<QHBoxLayout*>(layout)->addStretch();
 		}
@@ -58,9 +59,11 @@ QControlBar::QControlBar(Qt::Orientation orientation, Alignment alignment, QWidg
 			static_cast<QVBoxLayout*>(layout)->addStretch();
 		}
 		layout->addWidget(mStartButton);
+		
 		layout->addWidget(mPauseButton);
 		layout->addWidget(mStepButton);
 		layout->addWidget(mStateMarkerColorBox);
+		layout->addWidget(mAboutButton);
 		if (alignment != Alignment::TowardLast) {
 			static_cast<QVBoxLayout*>(layout)->addStretch();
 		}
@@ -71,6 +74,7 @@ QControlBar::QControlBar(Qt::Orientation orientation, Alignment alignment, QWidg
 	connect(mStartButton, &QPushButton::clicked, this, &QControlBar::toggleStartStop);
 	connect(mPauseButton, &QPushButton::clicked, this, &QControlBar::togglePauseResume);
 	connect(mStepButton, &QPushButton::clicked, this, &QControlBar::step);
+	connect(mAboutButton, &QPushButton::clicked, this, &QControlBar::about);
 
 	updateGui();
 }
@@ -177,6 +181,24 @@ void QControlBar::step()
 	if (mState == State::Idle || mState == State::Pause) {
 		emit stepped();
 	}
+}
+
+void QControlBar::about()
+{
+	QMessageBox::about(this,
+		"À propos de CppXtract",
+		"CppXtract est un logiciel d'extraction de commentaires du langage C++ \n \n "
+		"Ce programme a été réalisé par : \n "
+		"-Jean-Simon Forest \n"
+		"- Nicolas Champagne \n \n \n "
+		"Dans le cadre du cours : \n "
+		"-GPA 777 - Introduction au génie logicial \n"
+		"-Laboratoire 2 \n \n"
+		"Version 1.0 \n \n"
+		"-------------------------------\n"
+		"Présentation sommaite de l'extension \n"
+		"--------------------------------\n"
+		"Description de l'estentiorenfsdasad;uaobfsahiòfvounoîfa");
 }
 
 void QControlBar::updateGui()

@@ -43,6 +43,7 @@ public slots:
 	void pause();
 	void resume();
 	void step();
+	void about();
 
 signals:
 	void started();
@@ -58,6 +59,7 @@ protected:
 	QPushButton * mStartButton;
 	QPushButton * mPauseButton;
 	QPushButton * mStepButton;
+	QPushButton * mAboutButton;
 	QColorBox * mStateMarkerColorBox;
 
 	QColor mStateColor[4];
