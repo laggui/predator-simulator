@@ -50,8 +50,10 @@ protected:
 	// Élimine l'entité avec laquelle elle entre en contact
 	void kill(QGraphicsItem * item);
 private:
-	static const qreal minSize;
-	static const qreal maxSize;
+	// Les constantes
+	static const qreal sMinSize;
+	static const qreal sMaxSize;
+	static const qreal sSizeIncrement;
 };
 
 #endif // !Q_PREDATOR_H
