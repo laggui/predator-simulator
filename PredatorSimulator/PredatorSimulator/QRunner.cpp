@@ -32,24 +32,17 @@ QRunner::QRunner(const QRunner & runner)
 
 void QRunner::setHP(quint8 hp)
 {
-	QBrush nextColor;
-	const QColor red(Qt::red);
-	const QColor green(Qt::green);
-	const QColor yellow(Qt::yellow);
 
 	mHealthPoints = hp;
 	switch (mHealthPoints) {
 	case 1:
-		nextColor.setColor(red);
-		setColor(nextColor);
+		setColor(Qt::red);
 		break;
 	case 2:
-		nextColor.setColor(yellow);
-		setColor(nextColor);
+		setColor(Qt::yellow);
 		break;
 	case 3:
-		nextColor.setColor(green);
-		setColor(nextColor);
+		setColor(Qt::green);
 		break;
 	}
 }
