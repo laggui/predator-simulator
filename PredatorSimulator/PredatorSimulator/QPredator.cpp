@@ -113,8 +113,15 @@ void QPredator::advance(int phase)
 		// Itérer à travers les objets en collision
 		foreach(QGraphicsItem *item, collidingObjects) {
 			if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
-				runnerObj->setNextHP(runnerObj->HP() - mDamage);
-				if (mSize < maxSize) { setNextSize(mSize + 1); }
+				quint8 nextHP =  runnerObj->HP() - mDamage;
+				if (nextHP > 0) {
+					runnerObj->setNextHP(nextHP);
+				}
+				else {
+					kill(runnerObj);
+					if (mSize < maxSize) setNextSize(++mSize);
+				}
+				
 			}
 			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
 				setNextSize(mSize - bomberObj->damage());
@@ -133,4 +140,6 @@ void QPredator::advance(int phase)
 
 void QPredator::kill(QDynamicObject * object)
 {
+	// remove from scene
+	// delete
 }
