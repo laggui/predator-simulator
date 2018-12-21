@@ -63,12 +63,14 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 
 void PredatorSimulator::startSimulation()
 {
+	// Constantes de simulation
 	const quint8 wallWidth{ 20 };
 	const qreal membersSize{ 10 };
 	const qreal membersSpeedMin{ 1 };
 	const qreal membersSpeedMax{ 5 };
 	const qreal bombersDamage{ 5 };
 	const quint8 predatorsDamage{ 1 };
+	const qreal predatorsOrientation{ 180 };
 	const quint8 runnersHP{ 3 };
 	const qreal runnersOrientationOffset{ 20 };
 	const qreal verticalOrientation{ 90 };
@@ -77,73 +79,78 @@ void PredatorSimulator::startSimulation()
 	mGraphicsScene.clear();
 
 
-	// Met un item rectangulaire pour bien voir les limites de la scène
+	// On ajoute l'écosystème comme l'arrière-plan de notre scène
 	mEcosystem =  new QEcosystem(sTimerInterval*10, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height());
 	mGraphicsScene.addItem(mEcosystem);
 
-	// Ajout des murs
+	// Mur à gauche
 	mGraphicsScene.addItem(
 		new QWall(
-			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
-			wallWidth,
-			sSceneSize.height(),
-			verticalOrientation)); // Gauche
+			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2), // position
+			wallWidth, // largeur
+			sSceneSize.height(), // hauteur
+			verticalOrientation)); // orientation
 
+	// Mur à droite
 	mGraphicsScene.addItem(
 		new QWall(
-			QPointF(sSceneSize.width() / 2 - wallWidth, -sSceneSize.height() / 2),
-			wallWidth,
-			sSceneSize.height(),
-			verticalOrientation)); // Droite
+			QPointF(sSceneSize.width() / 2 - wallWidth, -sSceneSize.height() / 2), // position
+			wallWidth, // largeur
+			sSceneSize.height(), // hauteur
+			verticalOrientation)); // orientation
 
+	// Mur en haut
 	mGraphicsScene.addItem(
 		new QWall(
-			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2),
-			sSceneSize.width(),
-			wallWidth,
-			horizontalOrientation)); // En haut
+			QPointF(-sSceneSize.width() / 2, -sSceneSize.height() / 2), // position
+			sSceneSize.width(), // largeur
+			wallWidth, // hauteur
+			horizontalOrientation)); // orientation
 
+	// Zone de clonage en bas
 	mGraphicsScene.addItem(
 		new QCloningZone(
-			QPointF(-sSceneSize.width() / 2, sSceneSize.height() / 2),
-			sSceneSize.width(),
-			wallWidth,
-			horizontalOrientation,
-			-sSceneSize.height() / 2 + wallWidth)); // En bas
+			QPointF(-sSceneSize.width() / 2, sSceneSize.height() / 2), // position
+			sSceneSize.width(), // largeur
+			wallWidth, // hauteur
+			horizontalOrientation, // orientation
+			-sSceneSize.height() / 2 + wallWidth)); // position de départ pour le clonage
 
 	for (int i{ 0 }; i < mParametersQPredators->nbrOfItems(); ++i) {
+		// Prédateurs distribués uniformément sur l'axe y
 		mGraphicsScene.addItem(
 			new QPredator(
-				QPointF(0, -(sSceneSize.height()/2 - wallWidth * 2) + i * (static_cast<qreal>(sSceneSize.height() - wallWidth * 2) / (mParametersQPredators->nbrOfItems()))),	// distribués uniformément sur l'axe y
-				(i % 2) * 180,			// orientation aléatoire
-				random(membersSpeedMin, membersSpeedMax),			// vitesse aléatoire entre 1 et 5
-				random(membersSize, 2 * membersSize),			// taille aléatoire entre 2 et 10
-				predatorsDamage,							// dommage
-				0,							// timeNoKill
-				Qt::red));			// couleur aléatoire
+				QPointF(0, -(sSceneSize.height()/2 - wallWidth * 2) + i * (static_cast<qreal>(sSceneSize.height() - wallWidth * 2) / (mParametersQPredators->nbrOfItems()))),
+				(i % 2) * predatorsOrientation, // orientation alternée (soit 0 ou 180)
+				random(membersSpeedMin, membersSpeedMax), // vitesse aléatoire
+				random(membersSize, 2 * membersSize), // taille aléatoire
+				predatorsDamage, // dommage
+				0, // timeNoKill
+				Qt::red)); // couleur
 	}
 
 	for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
 			new QSuicideBomber(
-				QPointF(random(-sSceneSize.width() / 2 + wallWidth, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2) + wallWidth + membersSize),	// En haut de la boites
-				verticalOrientation,																										// Orienté vers le bas
-				random(membersSpeedMin, membersSpeedMax),																						// vitesse aléatoire entre 1 et 10
-				membersSize,																										// Taille
-				bombersDamage,																									// dommage
-				Qt::white));																								// bleu
+				QPointF(random(-sSceneSize.width() / 2 + wallWidth, sSceneSize.width() / 2 - wallWidth),
+						(-sSceneSize.height() / 2) + wallWidth + membersSize),	// position en haut de la scène, à l'intérieur des murs
+				verticalOrientation, // orientation
+				random(membersSpeedMin, membersSpeedMax), // vitesse aléatoire
+				membersSize, // taille
+				bombersDamage, // dommage
+				Qt::white)); // couleur
 	}
 
 	for (int i{ 0 }; i < mParametersQRunners->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
 			new QRunner(
-				QPointF(random(-sSceneSize.width() / 2  + wallWidth + membersSize, sSceneSize.width() / 2 - wallWidth - membersSize), (-sSceneSize.height() / 2) + wallWidth + membersSize),		// position En haut de la boites
-				random(0 + runnersOrientationOffset, 180 - runnersOrientationOffset),						// Orienté vers le bas rotation 0 = vers la droite
-				membersSpeedMax,		//vitesse
-				membersSize,		//size
-				runnersHP, // hp
-				Qt::green
-			));
+				QPointF(random(-sSceneSize.width() / 2  + wallWidth + membersSize, sSceneSize.width() / 2 - wallWidth - membersSize),
+						(-sSceneSize.height() / 2) + wallWidth + membersSize), // position en haut de la scène, à l'intérieur des murs
+				random(0 + runnersOrientationOffset, 180 - runnersOrientationOffset), // orientation
+				membersSpeedMax, // vitesse
+				membersSize, // taille
+				runnersHP, // vie
+				Qt::green)); // couleur
 
 	}
 	mTimer.start(sTimerInterval);
