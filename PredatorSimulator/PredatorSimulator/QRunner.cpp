@@ -12,7 +12,9 @@ QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegree
 	setSize(size);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
+	setNextHP(initialHealth);
 	setNextPos(initialPosition.x(), initialPosition.y());
+	setNextOrientation(initialOrientationDegrees);
 }
 
 QRunner::QRunner(const QRunner & runner)
