@@ -136,6 +136,7 @@ void PredatorSimulator::startSimulation()
 				random(20, 160),						// Orienté vers le bas rotation 0 = vers la droite
 				5,		//vitesse
 				runnerSize,		//size
+				3, // hp
 				Qt::green
 			));
 
