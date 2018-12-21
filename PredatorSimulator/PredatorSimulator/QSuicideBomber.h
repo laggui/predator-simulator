@@ -16,7 +16,7 @@ public:
 	void setNextOrientation(qreal orientation) override;
 
 	// Accesseurs
-	qreal getDamage() const;
+	qreal damage() const;
 
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
 	void clone() override;
@@ -30,7 +30,7 @@ public:
 	void advance(int phase) override;
 
 private:
-	// Le dommage (influence la grosseur d'un QPredator - doit être entre ]0, 1])
+	// Le dommage (influence la grosseur d'un QPredator)
 	qreal mDamage;
 	// La prochaine position
 	Attributes mNextAttributes;

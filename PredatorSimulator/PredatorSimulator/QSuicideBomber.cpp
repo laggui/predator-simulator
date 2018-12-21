@@ -19,12 +19,7 @@ QSuicideBomber::QSuicideBomber(QPointF const & initialPosition, qreal initialOri
 
 void QSuicideBomber::setDamage(qreal damage)
 {
-	if (damage > 0 && damage <= 1) {
-		mDamage = damage;
-	}
-	else {
-		mDamage = 0.9; // valeur par défaut si la valeur spécifiée est invalide
-	}
+	mDamage = qMax(0.0, damage);
 }
 
 void QSuicideBomber::setNextPos(qreal x, qreal y)
@@ -38,7 +33,7 @@ void QSuicideBomber::setNextOrientation(qreal orientation)
 	mNextAttributes.orientation = orientation;
 }
 
-qreal QSuicideBomber::getDamage() const
+qreal QSuicideBomber::damage()const
 {
 	return mDamage;
 }
@@ -46,7 +41,6 @@ qreal QSuicideBomber::getDamage() const
 void QSuicideBomber::clone()
 {
 	// N'est pas cloné.
-	bounce(180); // On le fait plutôt rebondir dans le sens opposé.
 }
 
 QRectF QSuicideBomber::boundingRect() const
