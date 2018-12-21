@@ -31,6 +31,15 @@ private:
 	unsigned int mTimeAlive;
 	// L'intervalle de temps auquel l'écosystème évolue
 	unsigned int mEvolveTime;
+	// La taille de la scène pour que l'écosystème puisse générer des items au bon endroit
+	QSize mSpawnSize;
+	// Les constantes pour la génération des entités
+	static const qreal sMembersSize;
+	static const qreal sMembersSpeed;
+	static const quint8 sRunnerHP;
+	static const qreal sBomberDamage;
+	static const qreal sBomberOrientation;
+	static const qreal sPredatorDecrement;
 };
 
 #endif // !Q_ECOSYSTEM_H
