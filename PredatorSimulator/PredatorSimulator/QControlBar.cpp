@@ -186,19 +186,34 @@ void QControlBar::step()
 void QControlBar::about()
 {
 	QMessageBox::about(this,
-		"À propos de CppXtract",
-		"CppXtract est un logiciel d'extraction de commentaires du langage C++ \n \n "
+		"À propos de PredatorSimulator",
+		"but:\n"
+		"PredatorSimulator est un jeu de simulation d'écosystème"
+		"le but de cette simulation est de comprendre et d'utiliser"
+		"le framework graphic view de QT.\n\n"
+		"Explication: \n"
+		"Nous avons trois créatures différentes dans notre simulation\n\n"
+		"Les Runner:\n"
+		"Ces dernier essaient de traverser la zone de jeu en restant en vie. Si il y arrivent,"
+		"ces dernier sont téléporté au début du jeux et sont cloner pour augmenter la quantité de runner\n\n"
+		"Les Predator:\n"
+		"Ces joueurs peuvent juste se déplacer de gauche a droite et essaient d'attraper les runner. Chaque fois"
+		"qu'un predator attrape un runner, le predator grandit ce qui le rend plus efficace pour attraper d'autre runner"
+		"Après un certain temps sans victime, les predator rapetissent à cause du manque de nourriture\n\n"
+		"SuicideBomber:\n"
+		"Au grand maux les grand moyen! S'inspirant des kamikaze japonais de la 2e guerre mondiale, les runner on réagit face"
+		"a la menace des predator. Les bomber peuvent se déplacer du haut vers le bas en ligne droite. Une fois arrivé en bas de"
+		"la zobne de jeu ils rebondissent vers le haut au lieu de se cloner. Leur but c'est d'attaquer un predator"
+		"lorsqu'il reussissent, il font rapetisser les predator.\n\n\n"
 		"Ce programme a été réalisé par : \n "
+		"-Guillaume Lagrange"
 		"-Jean-Simon Forest \n"
-		"- Nicolas Champagne \n \n \n "
+		"-Marc-André Maillé"
+		"-Nicolas Champagne \n \n \n "
 		"Dans le cadre du cours : \n "
 		"-GPA 777 - Introduction au génie logicial \n"
-		"-Laboratoire 2 \n \n"
-		"Version 1.0 \n \n"
-		"-------------------------------\n"
-		"Présentation sommaite de l'extension \n"
-		"--------------------------------\n"
-		"Description de l'estentiorenfsdasad;uaobfsahiòfvounoîfa");
+		"-Laboratoire 3 \n \n"
+		"Version 1.0 \n \n");
 }
 
 void QControlBar::updateGui()
