@@ -19,9 +19,9 @@ public:
 	virtual void setNextOrientation(qreal orientation) = 0;
 
 	void bounce(qreal bounceAngle) { qreal nextOrientation{ 2 * bounceAngle - rotation() };
+									 QPointF nextPos{ pos().x() + qCos(qDegreesToRadians(nextOrientation)) * mSpeed, pos().y() + qSin(qDegreesToRadians(nextOrientation)) * mSpeed };
 									 setNextOrientation(nextOrientation);
-									 setNextPos(pos().x() + qCos(qDegreesToRadians(nextOrientation)) * mSpeed,
-												pos().y() + qSin(qDegreesToRadians(nextOrientation)) * mSpeed);
+									 setNextPos(nextPos.x(), nextPos.y());
 								   }
 protected:
 	// La vitesse
