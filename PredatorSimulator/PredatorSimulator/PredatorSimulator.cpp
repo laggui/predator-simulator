@@ -65,6 +65,7 @@ void PredatorSimulator::startSimulation()
 {
 	const quint8 wallWidth{ 20 };
 	const qreal runnerSize{ 10 };
+	const qreal objScale{ 7 };
 	// Vide la scène pour démarrer une nouvelle démo
 	mGraphicsScene.clear();
 
@@ -116,17 +117,17 @@ void PredatorSimulator::startSimulation()
 				Qt::red));			// couleur aléatoire
 	}
 
-	//for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
-	//	mGraphicsScene.addItem(
-	//		// Tous les litéraux ici devraient être créés dans des constantes symboliques!
-	//		new QSuicideBomber(
-	//			QPointF(random(-sSceneSize.width() / 2 + wallWidth, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2) + wallWidth + 1.5*objScale),	// En haut de la boites
-	//			90.0,																										// Orienté vers le bas
-	//			random(1.0, 5.0),																						// vitesse aléatoire entre 1 et 10
-	//			1.5*objScale,																										// Taille
-	//			0.5,																									// dommage
-	//			Qt::white));																								// bleu
-	//}
+	for (int i{ 0 }; i < mParametersQSuicideBombers->nbrOfItems(); ++i) {
+		mGraphicsScene.addItem(
+			// Tous les litéraux ici devraient être créés dans des constantes symboliques!
+			new QSuicideBomber(
+				QPointF(random(-sSceneSize.width() / 2 + wallWidth, sSceneSize.width() / 2 - wallWidth), (-sSceneSize.height() / 2) + wallWidth + objScale),	// En haut de la boites
+				90.0,																										// Orienté vers le bas
+				random(1.0, 5.0),																						// vitesse aléatoire entre 1 et 10
+				objScale,																										// Taille
+				0.5,																									// dommage
+				Qt::white));																								// bleu
+	}
 
 	for (int i{ 0 }; i < mParametersQRunners->nbrOfItems(); ++i) {
 		mGraphicsScene.addItem(
