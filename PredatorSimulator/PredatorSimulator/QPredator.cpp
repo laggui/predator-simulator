@@ -128,6 +128,7 @@ void QPredator::advance(int phase)
 			}
 			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
 				setNextSize(mSize - bomberObj->damage());
+				kill(bomberObj);
 				if (mNextAttributes.size < minSize) { setNextSize(minSize); }
 			}
 		}
