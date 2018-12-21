@@ -42,9 +42,11 @@ void QEcosystem::paint(QPainter * painter, const QStyleOptionGraphicsItem * opti
 void QEcosystem::advance(int phase)
 {
 	if (phase == 0) {
+		//met à jour mTimeAlive
+		tick();
 		// Récupérer les items qui font parti de l'écosystème (dans la scène)
 		QList<QGraphicsItem *> sceneItems = scene()->items();
-		// Itérer à travers les objets et vérifier les prédateurs
+		 //Itérer à travers les objets et vérifier les prédateurs
 		foreach(QGraphicsItem *item, sceneItems) {
 			if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
 				if (predatorObj->timeNoKill() == mEvolveTime) {
@@ -55,12 +57,17 @@ void QEcosystem::advance(int phase)
 			}
 		}
 
-		if (mTimeAlive % mEvolveTime == 0) {
+		if ((mTimeAlive %  (mEvolveTime/5)) == 0) {
 			// Un runner ou bomber nait (choix aléatoire, avec plus de chance que ce soit un runner)
 			if (random(5)) {
-				/*scene()->addItem(
-					new QRunner()
-				);*/
+				scene()->addItem(
+							new QRunner(
+							QPointF(random(-250,250), -270),		// position En haut de la boites
+							random(20, 160),						// Orienté vers le bas rotation 0 = vers la droite
+							5,		//vitesse
+							10,		//size
+							3, // hp
+							Qt::green));
 			}
 			else {
 				/*scene()->addItem(
