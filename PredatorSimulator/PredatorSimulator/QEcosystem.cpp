@@ -58,7 +58,7 @@ void QEcosystem::advance(int phase)
 		 //Itérer à travers les objets et vérifier les prédateurs
 		foreach(QGraphicsItem *item, sceneItems) {
 			if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
-				if (predatorObj->timeNoKill() == (mEvolveTime/5)) {
+				if (predatorObj->timeNoKill() == mEvolveTime) {
 					// Diminuer la grosseur du prédateur
 					predatorObj->setNextSize(predatorObj->size() - sPredatorDecrement);
 					predatorObj->setNextTimeNoKill(0);
