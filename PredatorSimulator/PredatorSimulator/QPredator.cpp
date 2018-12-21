@@ -93,7 +93,7 @@ void QPredator::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 {
 	painter->setPen(Qt::NoPen);
 	painter->setBrush(mBrush);
-	painter->drawEllipse(mShape);
+	painter->drawRect(mShape);
 }
 
 void QPredator::advance(int phase)
