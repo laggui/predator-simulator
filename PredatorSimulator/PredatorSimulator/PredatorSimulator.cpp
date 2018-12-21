@@ -80,7 +80,7 @@ void PredatorSimulator::startSimulation()
 
 
 	// On ajoute l'écosystème comme l'arrière-plan de notre scène
-	mEcosystem =  new QEcosystem(sTimerInterval*10, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height());
+	mEcosystem =  new QEcosystem(QSize(sSceneSize.width() - 2 * wallWidth, sSceneSize.height() - 2 * wallWidth), sTimerInterval*10, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height());
 	mGraphicsScene.addItem(mEcosystem);
 
 	// Mur à gauche
