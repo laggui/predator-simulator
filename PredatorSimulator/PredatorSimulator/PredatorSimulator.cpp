@@ -65,7 +65,7 @@ void PredatorSimulator::startSimulation()
 {
 	const quint8 wallWidth{ 20 };
 	const qreal runnerSize{ 10 };
-	const qreal objScale{ 7 };
+	const qreal objScale{ 10 };
 	// Vide la scène pour démarrer une nouvelle démo
 	mGraphicsScene.clear();
 
@@ -125,7 +125,7 @@ void PredatorSimulator::startSimulation()
 				90.0,																										// Orienté vers le bas
 				random(1.0, 5.0),																						// vitesse aléatoire entre 1 et 10
 				objScale,																										// Taille
-				0.5,																									// dommage
+				5,																									// dommage
 				Qt::white));																								// bleu
 	}
 
