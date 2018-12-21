@@ -14,7 +14,8 @@ QSuicideBomber::QSuicideBomber(QPointF const & initialPosition, qreal initialOri
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setScale(scale);
-
+	setNextPos(initialPosition.x(), initialPosition.y());
+	setNextOrientation(initialOrientationDegrees);
 }
 
 void QSuicideBomber::setDamage(qreal damage)
