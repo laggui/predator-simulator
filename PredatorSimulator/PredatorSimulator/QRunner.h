@@ -16,6 +16,7 @@ public:
 	// Mutateurs
 	void setHP(quint8 hp);
 	void setSize(qreal size);
+	void setImmuneTime(quint8 time);
 	void setNextHP(quint8 hp);
 	void setNextPos(qreal x, qreal y) override;
 	void setNextOrientation(qreal orientation) override;
@@ -23,6 +24,7 @@ public:
 	// Accesseur
 	quint8 HP() const;
 	qreal size() const;
+	quint8 immuneTime() const;
 
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
 	void clone() override;
@@ -40,6 +42,8 @@ private:
 	quint8 mHealthPoints;
 	// La grosseur
 	qreal mSize;
+	// Le temps d'immunisation
+	quint8 mImmuneTime;
 	// Les prochains attributs
 	RunnerAttributes mNextAttributes;
 };

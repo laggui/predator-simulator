@@ -7,7 +7,8 @@
 
 QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal size, quint8 initialHealth, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
-	  mHealthPoints{ initialHealth }
+	  mHealthPoints{ initialHealth },
+	  mImmuneTime{ 0 }
 {
 	setSize(size);
 	setPos(initialPosition);
@@ -23,6 +24,7 @@ QRunner::QRunner(const QRunner & runner)
 	setRotation(runner.rotation());
 	mSpeed = runner.mSpeed;	
 	mHealthPoints = runner.mHealthPoints;
+	mImmuneTime = runner.mImmuneTime;
 	mBrush = runner.mBrush;
 	mNextAttributes = runner.mNextAttributes;
 	// Changer l'orientation
@@ -54,6 +56,11 @@ void QRunner::setSize(qreal size)
 	mShape.setRect(-mSize / 2, -mSize / 2, mSize, mSize);
 }
 
+void QRunner::setImmuneTime(quint8 time)
+{
+	mImmuneTime = qMax(static_cast<quint8>(0), time);
+}
+
 
 
 void QRunner::setNextPos(qreal x, qreal y)
@@ -80,6 +87,11 @@ quint8 QRunner::HP() const
 qreal QRunner::size() const
 {
 	return mSize;
+}
+
+quint8 QRunner::immuneTime() const
+{
+	return mImmuneTime;
 }
 
 void QRunner::clone()
@@ -117,5 +129,6 @@ void QRunner::advance(int phase)
 		setPos(mNextAttributes.x, mNextAttributes.y);
 		setRotation(mNextAttributes.orientation);
 		setHP(mNextAttributes.healthPoints);
+		if (mImmuneTime > 0) setImmuneTime(mImmuneTime - 1);
 	}
 }
