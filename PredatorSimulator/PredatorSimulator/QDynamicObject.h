@@ -13,6 +13,7 @@ public:
 	QDynamicObject(qreal initialSpeed = 1.0, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr) : QBasicItem<T>(brush, parent), mSpeed{ initialSpeed } {}
 
 	void setSpeed(qreal speed) { mSpeed = speed; }
+	qreal speed() const { return mSpeed; }
 	// Fonction virtuelle pure
 	virtual void clone() = 0;
 	virtual void setNextPos(qreal x, qreal y) = 0;
