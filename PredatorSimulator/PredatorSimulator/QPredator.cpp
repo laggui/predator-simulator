@@ -54,7 +54,7 @@ void QPredator::setNextOrientation(qreal orientation)
 	mNextAttributes.orientation = orientation;
 }
 
-void QPredator::setNextTimeNoKill(quint8 timeNoKill)
+void QPredator::setNextTimeNoKill(quint32 timeNoKill)
 {
 	mNextAttributes.timeNoKill = timeNoKill;
 }
@@ -69,7 +69,7 @@ quint8 QPredator::damage() const
 	return mDamage;
 }
 
-quint8 QPredator::timeNoKill() const
+quint32 QPredator::timeNoKill() const
 {
 	return mTimeNoKill;
 }
@@ -134,7 +134,7 @@ void QPredator::advance(int phase)
 		setPos(mNextAttributes.x, mNextAttributes.y);
 		setRotation(mNextAttributes.orientation);
 		setSize(mNextAttributes.size);
-		mTimeNoKill = mNextAttributes.timeNoKill;
+		incrementTimeNoKill();
 	}
 }
 

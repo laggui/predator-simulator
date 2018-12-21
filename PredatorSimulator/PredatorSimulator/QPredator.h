@@ -18,12 +18,12 @@ public:
 	void incrementTimeNoKill();
 	void setNextPos(qreal x, qreal y) override;
 	void setNextOrientation(qreal orientation) override;
-	void setNextTimeNoKill(quint8 timeNoKill);
+	void setNextTimeNoKill(quint32 timeNoKill);
 	void setNextSize(qreal size);
 	
 	// Accesseurs
 	quint8 damage() const;
-	quint8 timeNoKill() const;
+	quint32 timeNoKill() const;
 	qreal size() const;
 
 	// Clone (fonction abstraite de QDynamicObject - doit être "overridée")
@@ -41,7 +41,7 @@ protected:
 	// Le dommage que le prédateur inflige
 	quint8 mDamage;
 	// Le temps depuis sa dernière victime
-	quint8 mTimeNoKill;
+	quint32 mTimeNoKill;
 	// La grosseur
 	qreal mSize;
 	// Les prochains attributs

@@ -18,7 +18,7 @@ struct RunnerAttributes : public Attributes
 
 struct PredatorAttributes : public Attributes
 {
-	quint8 timeNoKill;
+	quint32 timeNoKill;
 	qreal size;
 };
 
