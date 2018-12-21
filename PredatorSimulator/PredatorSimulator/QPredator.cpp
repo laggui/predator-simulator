@@ -148,7 +148,7 @@ void QPredator::advance(int phase)
 void QPredator::kill(QGraphicsItem * item)
 {
 	// remove from scene mGraphicsScene
-	scene()->QGraphicsScene::removeItem(item);  // on retire l'item de la liste de la scene
+	scene()->removeItem(item);  // on retire l'item de la liste de la scene
 	delete item; // on supprime la mémoire allouée dynamiquement liée à l'item
 	resetTimeNoKill();
 }
