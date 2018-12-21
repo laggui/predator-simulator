@@ -206,13 +206,13 @@ void QControlBar::about()
 		"la zobne de jeu ils rebondissent vers le haut au lieu de se cloner. Leur but c'est d'attaquer un predator"
 		"lorsqu'il reussissent, il font rapetisser les predator.\n\n\n"
 		"Ce programme a été réalisé par : \n "
-		"-Guillaume Lagrange"
+		"-Guillaume Lagrange\n"
 		"-Jean-Simon Forest \n"
-		"-Marc-André Maillé"
+		"-Marc-André Maillé \n"
 		"-Nicolas Champagne \n \n \n "
 		"Dans le cadre du cours : \n "
 		"-GPA 777 - Introduction au génie logicial \n"
-		"-Laboratoire 3 \n \n"
+		"-Laboratoire 3 \n"
 		"Version 1.0 \n \n");
 }
 
