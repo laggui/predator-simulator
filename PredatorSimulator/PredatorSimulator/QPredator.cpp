@@ -114,15 +114,18 @@ void QPredator::advance(int phase)
 		foreach(QGraphicsItem *item, collidingObjects) {
 			if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
 				quint8 nextHP =  runnerObj->HP() - mDamage;
-				if (nextHP > 0) {
-					runnerObj->setNextHP(nextHP);
-					// Changer sa position pour éviter les collisions multiples répétées
-					/*runnerObj->setNextPos(runnerObj->pos().x() + qCos(qDegreesToRadians(runnerObj->rotation()))*(mSize+runnerObj->size()),
-										  runnerObj->pos().y() + qSin(qDegreesToRadians(runnerObj->rotation()))*(mSize + runnerObj->size()));*/
-				}
-				else {
-					kill(runnerObj);
-					if (mSize < maxSize) setNextSize(++mSize);
+				if (runnerObj->immuneTime() == 0) {
+					const quint8 pixelOffset = 2;
+					if (nextHP > 0) {
+						runnerObj->setNextHP(nextHP);
+						// Calcul du temps d'immunisation afin d'empêcher les collisions répétées lorsque le runner passe à travers un prédateur
+						quint8 immuneTime = (pos().y() + mSize / 2 + runnerObj->size() / 2 + pixelOffset  - runnerObj->pos().y()) / (qSin(qDegreesToRadians(runnerObj->rotation())) * runnerObj->speed());
+						runnerObj->setImmuneTime(immuneTime + 1);
+					}
+					else {
+						kill(runnerObj);
+						if (mSize < maxSize) setNextSize(++mSize);
+					}
 				}
 				
 			}
