@@ -13,7 +13,6 @@ QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegree
 	setSize(size);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
-	mShape.setRect(-mSize / 2, -mSize / 2, mSize, mSize);
 	setNextPos(initialPosition.x(), initialPosition.y());
 }
 
@@ -50,6 +49,7 @@ void QRunner::setHP(quint8 hp)
 void QRunner::setSize(qreal size)
 {
 	mSize = qMax(1.0, size);
+	mShape.setRect(-mSize / 2, -mSize / 2, mSize, mSize);
 }
 
 

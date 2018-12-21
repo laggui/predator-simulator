@@ -16,7 +16,6 @@ QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDe
 	  mTimeNoKill{ timeNoKill }
 {
 	setSize(size);
-	mShape.setRect(-mSize/2, -mSize /2, mSize, mSize);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setNextSize(mSize);
@@ -31,6 +30,7 @@ void QPredator::setDamage(quint8 damage)
 void QPredator::setSize(qreal size)
 {
 	mSize = qMax(1.0, size);
+	mShape.setRect(-mSize / 2, -mSize / 2, mSize, mSize);
 }
 
 void QPredator::resetTimeNoKill()
