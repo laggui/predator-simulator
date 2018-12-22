@@ -16,6 +16,7 @@ public:
 	void setSize(qreal size);
 	void resetTimeNoKill();
 	void incrementTimeNoKill();
+	void setFrozen(quint8 freezeTime);
 	void setNextPos(qreal x, qreal y) override;
 	void setNextOrientation(qreal orientation) override;
 	void setNextTimeNoKill(quint32 timeNoKill);
@@ -50,6 +51,8 @@ protected:
 	// Élimine l'entité avec laquelle elle entre en contact
 	void kill(QGraphicsItem * item);
 private:
+	// Propriété
+	quint8 mFrozen;
 	// Les constantes
 	static const qreal sMinSize;
 	static const qreal sMaxSize;

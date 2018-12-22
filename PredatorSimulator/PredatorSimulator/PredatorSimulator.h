@@ -7,6 +7,7 @@
 #include <QGraphicsScene>
 #include <QTimer>
 
+class QPushButton;
 class QGraphicsView;
 class QControlBar;
 class QParameters;
@@ -30,6 +31,7 @@ private:
 	QParameters * mParametersQPredators;
 	QParameters * mParametersQSuicideBombers;
 	QControlBar * mControlBar;
+	QPushButton * mActOfGod;
 
 	QTimer mTimer;
 	QEcosystem * mEcosystem;
@@ -39,6 +41,7 @@ private:
 	static const QSize sSceneSize;
 	static const QColor sSceneBackgroundColor;
 	static const int sTimerInterval;
+	static const int sActOfGodFreezeTime;
 
 private slots:
 	void startSimulation();
@@ -46,6 +49,7 @@ private slots:
 	void pauseSimulation();
 	void resumeSimulation();
 	void stopSimulation();
+	void actOfGod();
 
 };
 

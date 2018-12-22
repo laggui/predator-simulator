@@ -14,7 +14,8 @@ const qreal QPredator::sSizeIncrement{ 5 };
 QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal size, quint8 damage, quint8 timeNoKill, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
 	  mDamage{ damage },
-	  mTimeNoKill{ timeNoKill }
+	  mTimeNoKill{ timeNoKill },
+	  mFrozen{ 0 }
 {
 	setSize(size);
 	setPos(initialPosition);
@@ -42,6 +43,11 @@ void QPredator::resetTimeNoKill()
 void QPredator::incrementTimeNoKill()
 {
 	++mTimeNoKill;
+}
+
+void QPredator::setFrozen(quint8 freezeTime)
+{
+	mFrozen = freezeTime;
 }
 
 void QPredator::setNextPos(qreal x, qreal y)
@@ -100,13 +106,19 @@ void QPredator::paint(QPainter * painter, const QStyleOptionGraphicsItem * optio
 void QPredator::advance(int phase)
 {
 	if (phase == 0) {
-		// Vérifier si la position a déjà été modifiée (collision avec un mur)
-		if (mNextAttributes.x == pos().x() && mNextAttributes.y == pos().y()) {
-			// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
-			QPointF newPosition(pos().x() + qCos(qDegreesToRadians(rotation()))*mSpeed, pos().y());
-			// store la nouvelle orientation et la nouvelle position en attendant la phase 1
-			setNextPos(newPosition.x(), newPosition.y());
-			setNextOrientation(rotation());
+		// Ne pas mettre à jour la position si le prédateur est gelé
+		if (!mFrozen) {
+			// Vérifier si la position a déjà été modifiée (collision avec un mur)
+			if (mNextAttributes.x == pos().x() && mNextAttributes.y == pos().y()) {
+				// Détermine la nouvelle position selon la nouvelle orientation et la vitesse
+				QPointF newPosition(pos().x() + qCos(qDegreesToRadians(rotation()))*mSpeed, pos().y());
+				// store la nouvelle orientation et la nouvelle position en attendant la phase 1
+				setNextPos(newPosition.x(), newPosition.y());
+				setNextOrientation(rotation());
+			}
+		}
+		else {
+			--mFrozen;
 		}
 		// Récupérer les items qui sont en collision
 		QList<QGraphicsItem *> collidingObjects = collidingItems();
@@ -114,13 +126,13 @@ void QPredator::advance(int phase)
 		// Itérer à travers les objets en collision
 		foreach(QGraphicsItem *item, collidingObjects) {
 			if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
-				quint8 nextHP =  runnerObj->HP() - mDamage;
+				quint8 nextHP = runnerObj->HP() - mDamage;
 				if (runnerObj->immuneTime() == 0) {
 					const quint8 pixelOffset = 2;
 					if (nextHP > 0) {
 						runnerObj->setNextHP(nextHP);
 						// Calcul du temps d'immunisation afin d'empêcher les collisions répétées lorsque le runner passe à travers un prédateur
-						quint8 immuneTime = (pos().y() + mSize / 2 + runnerObj->size() / 2 + pixelOffset  - runnerObj->pos().y()) / (qSin(qDegreesToRadians(runnerObj->rotation())) * runnerObj->speed());
+						quint8 immuneTime = (pos().y() + mSize / 2 + runnerObj->size() / 2 + pixelOffset - runnerObj->pos().y()) / (qSin(qDegreesToRadians(runnerObj->rotation())) * runnerObj->speed());
 						runnerObj->setImmuneTime(immuneTime + 1);
 					}
 					else {
@@ -133,7 +145,7 @@ void QPredator::advance(int phase)
 						}
 					}
 				}
-				
+
 			}
 			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
 				setNextSize(mSize - bomberObj->damage());

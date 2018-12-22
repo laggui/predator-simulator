@@ -2,8 +2,9 @@
 
 #include <QGraphicsView>
 #include <QHBoxLayout>
-#include <QGraphicsRectItem>
 #include <QRandomGenerator>
+#include <QPushButton>
+
 #include "QControlBar.h"
 #include "QParameters.h"
 #include "QPredator.h"
@@ -18,6 +19,7 @@ const size_t PredatorSimulator::sMaxNbrOfItems{ 100 };
 const QSize PredatorSimulator::sSceneSize(600, 600);
 const QColor PredatorSimulator::sSceneBackgroundColor(16, 32, 64);
 const int PredatorSimulator::sTimerInterval{ 30 };
+const int PredatorSimulator::sActOfGodFreezeTime{ sTimerInterval * 15 };
 
 PredatorSimulator::PredatorSimulator(QWidget *parent)
 	: QMainWindow(parent),
@@ -25,7 +27,8 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	mParametersQRunners{ new QParameters(sMaxNbrOfItems,"QRunners") },
 	mParametersQPredators{ new QParameters(sMaxNbrOfItems,"QPredators") },
 	mParametersQSuicideBombers{ new QParameters(sMaxNbrOfItems,"QSuicideBombers") },
-	mControlBar{ new QControlBar(Qt::Vertical) }
+	mControlBar{ new QControlBar(Qt::Vertical) },
+	mActOfGod{ new QPushButton(tr("Act of God"))}
 {
 	ui.setupUi(this);
 
@@ -40,6 +43,8 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	controlLayout->addWidget(mParametersQRunners);
 	controlLayout->addWidget(mParametersQPredators);
 	controlLayout->addWidget(mParametersQSuicideBombers);
+	mActOfGod->setEnabled(false);
+	controlLayout->addWidget(mActOfGod);
 	controlLayout->addStretch();
 	controlLayout->addWidget(mControlBar);
 
@@ -59,6 +64,7 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 	connect(mControlBar, &QControlBar::stepped, this, &PredatorSimulator::stepSimulation);
 
 	connect(&mTimer, &QTimer::timeout, &mGraphicsScene, &QGraphicsScene::advance);
+	connect(mActOfGod, &QPushButton::clicked, this, &PredatorSimulator::actOfGod);
 }
 
 void PredatorSimulator::startSimulation()
@@ -77,7 +83,7 @@ void PredatorSimulator::startSimulation()
 	const qreal horizontalOrientation{ 0 };
 	// Vide la scène pour démarrer une nouvelle démo
 	mGraphicsScene.clear();
-
+	mActOfGod->setEnabled(true);
 
 	// On ajoute l'écosystème comme l'arrière-plan de notre scène
 	mEcosystem =  new QEcosystem(QSize(sSceneSize.width() - 2 * wallWidth, sSceneSize.height() - 2 * wallWidth), sTimerInterval*10, 0, QPointF(0,0), sSceneSize.width(), sSceneSize.height());
@@ -180,4 +186,16 @@ void PredatorSimulator::resumeSimulation()
 void PredatorSimulator::stopSimulation()
 {
 	mTimer.stop();
+	mActOfGod->setEnabled(false);
+}
+
+void PredatorSimulator::actOfGod()
+{
+	QList<QGraphicsItem *> sceneItems = mGraphicsScene.items();
+	//Itérer à travers les objets et vérifier les prédateurs
+	foreach(QGraphicsItem *item, sceneItems) {
+		if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
+			predatorObj->setFrozen(sActOfGodFreezeTime);
+		}
+	}
 }
