@@ -38,6 +38,10 @@ public:
 	// Fonction virtuelle de QGraphicsItem (peut être "overridée") : fait un tick de simulation
 	void advance(int phase) override;
 
+	// Constantes publiques
+	static const qreal sMinSize;
+	static const qreal sMaxSize;
+
 protected:
 	// Le dommage que le prédateur inflige
 	quint8 mDamage;
@@ -53,9 +57,7 @@ protected:
 private:
 	// Propriété
 	quint8 mFrozen;
-	// Les constantes
-	static const qreal sMinSize;
-	static const qreal sMaxSize;
+	// Constante privée
 	static const qreal sSizeIncrement;
 };
 
