@@ -54,7 +54,7 @@ void NotreClasse::advance(int phase)
 
 ## TO-DO
 
-- [ ] PredatorSimulator
+- [x] PredatorSimulator avec ActOfGod
 - [x] QBasicItem
 	- [x] QWall
 		- [x] QCloningZone
@@ -63,7 +63,6 @@ void NotreClasse::advance(int phase)
 		- [x] QPredator
 		- [x] QSuicideBomber
 	- [x] QEcosytem
-- [ ] QActOfGod: on a rien encore, il nous faut un bouton qui va faire une action
 
 - [ ] **Rapport**
 - [ ] **UML** (mettre à jour)
