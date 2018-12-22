@@ -5,7 +5,45 @@
 #include <QPushButton>
 #include "QColorBox.h"
 
-
+QString const QControlBar::sAboutMessage(
+	"Objectif:\n"
+	"PredatorSimulator est un jeu de simulation d'écosystème. "
+	"Le but de cette simulation est de comprendre et d'utiliser "
+	"le framework graphic view de Qt, et d'appliquer nos connaissances des paradigmes "
+	"de l'orienté-objet en impliquant plusieurs classes qui interagissent entre elles.\n\n"
+	"Explication de l'écosytème:\n"
+	"Nous avons trois créatures différentes dans notre simulation, qui sont décrites ci-dessous.\n\n"
+	"Les QRunner:\n"
+	"Ces derniers essaient de traverser la zone de jeu en restant en vie. À la fin, une zone de clonage (en jaune) "
+	"les téléporte au début de la scène où ils sont clonés pour augmenter la quantité de runners.\n\n"
+	"Les QPredator:\n"
+	"Ces joueurs ne se déplacent uniquement de gauche à droite en essayant d'attraper les runners. Chaque fois "
+	"qu'un prédateur attrape un runner, ce dernier subit du dommage et perd de la vie. Lorsqu'un runner se fait toucher "
+	"par un prédateur à son dernier point de vie (rouge), le prédateur le tue et il devient plus gros, ce qui le rend plus "
+	"efficace pour attraper d'autre runners.\n\n"
+	"Les QSuicideBomber:\n"
+	"Aux grands maux les grands moyens! S'inspirant des kamikazes japonais de la 2e guerre mondiale, les runners ont réagit face "
+	"à la menace des prédateurs. Les bombers sont des alliers des runners, qui peuvent uniquement en ligne droite. Si celui-ci "
+	"se rend à la zone de clonage sans avoir attaqué un prédateur, il rebondit vers le haut au lieu de se cloner pour retourner "
+	"attaquer les prédateurs. Lorsqu'un bomber réussi à entrer en contact avec un prédateur, il lui inflige du dommage qui le fait "
+	"rétrécir, le rendant moins efficace à capturer des runners.\n\n"
+	"Interaction avec l'écosystème:\n"
+	"L'écosystème interagit avec toutes les entités dynamiques sur le terrain, soit les runners, les suicide bombers et les prédateurs. "
+	"Après un certain temps prédéterminé, soit le temps d'évolution de l'écosystème, un nouveau runner ou suicide bomber (décision aléatoire) "
+	"nait dans l'écosystème. Pour ce qui est des prédateurs, ils sont affaiblis si ça fait trop longtemps qu'ils n'ont pas tué un runner. Ainsi, "
+	"les prédateurs rapetissent à cause du manque de nourriture après un temps prédéterminé. Comme vous pouvez aussi le remarquer, le terrain est "
+	"délimité par des murs (rouge foncé) et une zone de clonage (jaune). La zone de clonage interagit avec les runners et les suicide bombers tel "
+	"que mentionné précédemment, alors que les murs font rebondir toutes les entités dynamiques.\n\n\n"
+	"Ce programme a été réalisé par : \n "
+	"- Guillaume Lagrange\n"
+	"- Jean-Simon Forest \n"
+	"- Marc-André Maillé \n"
+	"- Nicolas Champagne \n\n\n "
+	"Dans le cadre du cours : \n "
+	"- GPA777 - Introduction au génie logiciel \n"
+	"- Laboratoire 3 \n"
+	"Version 1.0 \n \n"
+);
 QString const QControlBar::sDefaultStartText("Start");
 QString const QControlBar::sDefaultStopText("Stop");
 QString const QControlBar::sDefaultStepText("Step");
@@ -33,7 +71,7 @@ QControlBar::QControlBar(Qt::Orientation orientation, Alignment alignment, QWidg
 		mStartButton{ new QPushButton(mStartText) },
 		mPauseButton{ new QPushButton(mPauseText) },
 		mStepButton{ new QPushButton(mStepText) },
-		mAboutButton{new QPushButton("à propos")},
+		mAboutButton{new QPushButton("À propos")},
 		mStateMarkerColorBox{ new QColorBox },
 		mStateColor{ sDefaultStateColor[0], sDefaultStateColor[1], sDefaultStateColor[2], sDefaultStateColor[3] },
 		mBorderColor(sDefaultBorderColor)
@@ -185,35 +223,7 @@ void QControlBar::step()
 
 void QControlBar::about()
 {
-	QMessageBox::about(this,
-		"À propos de PredatorSimulator",
-		"but:\n"
-		"PredatorSimulator est un jeu de simulation d'écosystème"
-		"le but de cette simulation est de comprendre et d'utiliser"
-		"le framework graphic view de QT.\n\n"
-		"Explication: \n"
-		"Nous avons trois créatures différentes dans notre simulation\n\n"
-		"Les Runner:\n"
-		"Ces dernier essaient de traverser la zone de jeu en restant en vie. Si il y arrivent,"
-		"ces dernier sont téléporté au début du jeux et sont cloner pour augmenter la quantité de runner\n\n"
-		"Les Predator:\n"
-		"Ces joueurs peuvent juste se déplacer de gauche a droite et essaient d'attraper les runner. Chaque fois"
-		"qu'un predator attrape un runner, le predator grandit ce qui le rend plus efficace pour attraper d'autre runner"
-		"Après un certain temps sans victime, les predator rapetissent à cause du manque de nourriture\n\n"
-		"SuicideBomber:\n"
-		"Au grand maux les grand moyen! S'inspirant des kamikaze japonais de la 2e guerre mondiale, les runner on réagit face"
-		"a la menace des predator. Les bomber peuvent se déplacer du haut vers le bas en ligne droite. Une fois arrivé en bas de"
-		"la zobne de jeu ils rebondissent vers le haut au lieu de se cloner. Leur but c'est d'attaquer un predator"
-		"lorsqu'il reussissent, il font rapetisser les predator.\n\n\n"
-		"Ce programme a été réalisé par : \n "
-		"-Guillaume Lagrange\n"
-		"-Jean-Simon Forest \n"
-		"-Marc-André Maillé \n"
-		"-Nicolas Champagne \n \n \n "
-		"Dans le cadre du cours : \n "
-		"-GPA 777 - Introduction au génie logicial \n"
-		"-Laboratoire 3 \n"
-		"Version 1.0 \n \n");
+	QMessageBox::about(this, "À propos de PredatorSimulator", sAboutMessage);
 }
 
 void QControlBar::updateGui()

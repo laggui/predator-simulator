@@ -8,17 +8,11 @@ class QColorBox;
 class QPushButton;
 class QLabel;
 
-// Pas eu le temps de documenter : surtout, voir les signaux
-//	 started
-//	 stopped
-//	 paused
-//	 resumed
-//	 stepped
 class QControlBar : public QWidget
 {
 	Q_OBJECT
 
-	static const QString sDefaultStartText, sDefaultStopText, sDefaultStepText, sDefaultPauseText, sDefaultResumeText;
+	static const QString sDefaultStartText, sDefaultStopText, sDefaultStepText, sDefaultPauseText, sDefaultResumeText, sAboutMessage;
 	static const size_t sDefaultStateMarkerDepth;
 	static const QColor sDefaultStateColor[4];
 	static const QColor sDefaultBorderColor;
