@@ -126,7 +126,7 @@ void PredatorSimulator::startSimulation()
 		// Prédateurs distribués uniformément sur l'axe y
 		mGraphicsScene.addItem(
 			new QPredator(
-				QPointF(0, -(sSceneSize.height()/2 - wallWidth * 2) + i * (static_cast<qreal>(sSceneSize.height() - wallWidth * 2) / (mParametersQPredators->nbrOfItems()))),
+				QPointF(0, (-sSceneSize.height()/2 + wallWidth + QPredator::sMaxSize/2) + i * ( static_cast<qreal>(sSceneSize.height() - wallWidth * 2 - QPredator::sMaxSize) / (mParametersQPredators->nbrOfItems() - 1) )),
 				(i % 2) * predatorsOrientation, // orientation alternée (soit 0 ou 180)
 				random(membersSpeedMin, membersSpeedMax), // vitesse aléatoire
 				random(membersSize, 2 * membersSize), // taille aléatoire
