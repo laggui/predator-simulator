@@ -1,10 +1,11 @@
 #include "QPredator.h"
+
 #include "QRunner.h"
 #include "QSuicideBomber.h"
+
 #include <QPainter>
 #include <QtMath>
 #include <QRandomGenerator>
-
 #include <QGraphicsScene>
 
 const qreal QPredator::sMinSize{ 5 };
@@ -17,6 +18,7 @@ QPredator::QPredator(QPointF const & initialPosition, qreal initialOrientationDe
 	  mTimeNoKill{ timeNoKill },
 	  mFrozen{ 0 }
 {
+	// Initialisation des attributs
 	setSize(size);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
@@ -126,9 +128,12 @@ void QPredator::advance(int phase)
 		// Itérer à travers les objets en collision
 		foreach(QGraphicsItem *item, collidingObjects) {
 			if (auto runnerObj = dynamic_cast<QRunner*>(item)) {
+				// Calcul du prochain niveau de vie du runner
 				quint8 nextHP = runnerObj->HP() - mDamage;
+				// Vérifier que le runner n'est pas immunisé (empêche les collisions répétés)
 				if (runnerObj->immuneTime() == 0) {
 					const quint8 pixelOffset = 2;
+					// Endommager le runner s'il a plus de 0 HP après avoir été endommagé
 					if (nextHP > 0) {
 						runnerObj->setNextHP(nextHP);
 						// Calcul du temps d'immunisation afin d'empêcher les collisions répétées lorsque le runner passe à travers un prédateur
@@ -136,19 +141,29 @@ void QPredator::advance(int phase)
 						runnerObj->setImmuneTime(immuneTime + 1);
 					}
 					else {
+						// Tuer le runner s'il a moins de 0 HP après avoir été endommagé
 						kill(runnerObj);
+						// Prendre en note la taille précédente
+						qreal prevSize = mSize;
+						// Augmenter la taille du prédateur
 						if (mSize + sSizeIncrement < sMaxSize) {
 							setNextSize(mSize + sSizeIncrement);
 						}
 						else {
 							setNextSize(sMaxSize);
 						}
+						// On redéfini la prochaine position en fonction de la différence de taille,
+						// ce qui devrait empêcher le cas ou un prédateur tue un runner (et donc grossit) avant d'entrer en collision
+						// avec un mur. Sans cette modification, le prédateur se retrouvait dans le mur, et ne pouvait pu se déplacer (collisions répétées)
+						setNextPos(mNextAttributes.x - qCos(qDegreesToRadians(rotation()))*((mSize - prevSize) / 2), mNextAttributes.y);
 					}
 				}
 
 			}
 			else if (auto bomberObj = dynamic_cast<QSuicideBomber*>(item)) {
+				// Si c'est un bomber, le prédateur reçoit du dommage
 				setNextSize(mSize - bomberObj->damage());
+				// Tuer le bomber
 				kill(bomberObj);
 			}
 		}
@@ -164,7 +179,6 @@ void QPredator::advance(int phase)
 
 void QPredator::kill(QGraphicsItem * item)
 {
-	// remove from scene mGraphicsScene
 	scene()->removeItem(item);  // on retire l'item de la liste de la scene
 	delete item; // on supprime la mémoire allouée dynamiquement liée à l'item
 	resetTimeNoKill();

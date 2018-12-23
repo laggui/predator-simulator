@@ -4,12 +4,13 @@
 #include "QDynamicObject.h"
 #include "Attributes.h"
 
-// La classe QPredator interagit avec 
+// La classe QPredator est un objet dynamique qui inflige du dommage (et même tue) aux runners.
+// Un QPredator interagit également avec la classe QSuicideBomber
 class QPredator : public QDynamicObject<QRectF>
 {
 public:
 	QPredator(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
-			  quint8 damage = 25, quint8 timeNoKill = 0, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
+			  quint8 damage = 1, quint8 timeNoKill = 0, QBrush const & brush = Qt::white, QGraphicsItem * parent = nullptr);
 
 	// Mutateurs
 	void setDamage(quint8 damage);
@@ -49,16 +50,16 @@ protected:
 	quint32 mTimeNoKill;
 	// La grosseur
 	qreal mSize;
-	// Les prochains attributs
-	PredatorAttributes mNextAttributes;
+	// Propriété (temps pendant lequel le prédateur est gelé sur place)
+	quint8 mFrozen;
+	// Constante
+	static const qreal sSizeIncrement;
 
 	// Élimine l'entité avec laquelle elle entre en contact
 	void kill(QGraphicsItem * item);
 private:
-	// Propriété
-	quint8 mFrozen;
-	// Constante privée
-	static const qreal sSizeIncrement;
+	// Les prochains attributs
+	PredatorAttributes mNextAttributes;
 };
 
 #endif // !Q_PREDATOR_H

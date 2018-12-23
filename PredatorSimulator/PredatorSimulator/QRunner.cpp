@@ -1,15 +1,16 @@
 #include "QRunner.h"
+
+#include "Random.h"
 #include <QGraphicsScene>
 #include <QPainter>
 #include <QtMath>
-#include "QWall.h"
-#include "Random.h"
 
 QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegrees, qreal initialSpeed, qreal size, quint8 initialHealth, QBrush const & brush, QGraphicsItem * parent)
 	: QDynamicObject(initialSpeed, brush, parent),
 	  mHealthPoints{ initialHealth },
 	  mImmuneTime{ 0 }
 {
+	// Initialisation des attributs du runner
 	setSize(size);
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
@@ -20,6 +21,7 @@ QRunner::QRunner(QPointF const & initialPosition, qreal initialOrientationDegree
 
 QRunner::QRunner(const QRunner & runner)
 {
+	// Le constructeur de copie duplique l'information d'un runner, tout en modifiant son orientation
 	setPos(runner.pos());
 	setRotation(runner.rotation());
 	mSpeed = runner.mSpeed;	
@@ -28,15 +30,16 @@ QRunner::QRunner(const QRunner & runner)
 	mBrush = runner.mBrush;
 	mNextAttributes = runner.mNextAttributes;
 	// Changer l'orientation
-	mNextAttributes.orientation = qMin(355.0, 180.0 - runner.mNextAttributes.orientation + random(25.0)); // flip orientation
+	mNextAttributes.orientation = qMin(355.0, 180.0 - runner.mNextAttributes.orientation + random(25.0));
 	//mNextAttributes.x = 
 	mShape = QRectF(runner.mShape);
 }
 
 void QRunner::setHP(quint8 hp)
 {
-
-	mHealthPoints = hp;
+	// Le plus bas niveau de vie d'un runner est 1, sinon cela signifie qu'il meurt
+	mHealthPoints = qMax(static_cast<quint8>(1), hp);
+	// Le niveau de vie du runner change aussi sa couleur (automatiquement)
 	switch (mHealthPoints) {
 	case 1:
 		setColor(Qt::red);
@@ -44,7 +47,7 @@ void QRunner::setHP(quint8 hp)
 	case 2:
 		setColor(Qt::yellow);
 		break;
-	case 3:
+	default:
 		setColor(Qt::green);
 		break;
 	}
@@ -52,7 +55,9 @@ void QRunner::setHP(quint8 hp)
 
 void QRunner::setSize(qreal size)
 {
+	// Taille minimum est 1
 	mSize = qMax(1.0, size);
+	// Changer la forme
 	mShape.setRect(-mSize / 2, -mSize / 2, mSize, mSize);
 }
 
@@ -96,6 +101,7 @@ quint8 QRunner::immuneTime() const
 
 void QRunner::clone()
 {
+	// On ajoute un clone (constructeur de copie) du runner à la scène
 	QRunner * newRunner{ new QRunner(*this) };
 	scene()->addItem(newRunner);
 }
@@ -125,7 +131,7 @@ void QRunner::advance(int phase)
 		}
 	}
 	else if (phase == 1) {
-		//applique les attributs calculé dans la phase 0
+		// Applique les attributs calculés dans la phase 0
 		setPos(mNextAttributes.x, mNextAttributes.y);
 		setRotation(mNextAttributes.orientation);
 		setHP(mNextAttributes.healthPoints);

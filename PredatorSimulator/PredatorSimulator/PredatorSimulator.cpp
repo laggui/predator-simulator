@@ -32,6 +32,11 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 {
 	ui.setupUi(this);
 
+	// Définir les paramètres de la fenêtre
+	setWindowTitle(tr("Predator Simulator"));
+	setWindowIcon(QIcon("predator.png"));
+
+	// Initialisation des éléments graphiques
 	mControlBar->setReady();
 	mControlBar->setText("Start new simulation", "End simulation", "Pause simulation", "Resume simulation", "One step simulation");
 	mControlBar->setColor(QColor(0, 255, 0), QColor(255, 255, 0), QColor(255, 0, 0), QColor(230, 230, 230), QColor(128, 128, 128));
@@ -57,13 +62,16 @@ PredatorSimulator::PredatorSimulator(QWidget *parent)
 
 	setCentralWidget(centralWidget);
 
+	// Connexion des signaux de la barre de contrôle avec les slots de la simulation
 	connect(mControlBar, &QControlBar::started, this, &PredatorSimulator::startSimulation);
 	connect(mControlBar, &QControlBar::stopped, this, &PredatorSimulator::stopSimulation);
 	connect(mControlBar, &QControlBar::paused, this, &PredatorSimulator::pauseSimulation);
 	connect(mControlBar, &QControlBar::resumed, this, &PredatorSimulator::resumeSimulation);
 	connect(mControlBar, &QControlBar::stepped, this, &PredatorSimulator::stepSimulation);
 
+	// Connexion du timer pour faire "advance" les éléments
 	connect(&mTimer, &QTimer::timeout, &mGraphicsScene, &QGraphicsScene::advance);
+	// Connexion pour l'act of god
 	connect(mActOfGod, &QPushButton::clicked, this, &PredatorSimulator::actOfGod);
 }
 
@@ -163,11 +171,6 @@ void PredatorSimulator::startSimulation()
 
 }
 
-QSize PredatorSimulator::sceneSize() const
-{
-	return sSceneSize;
-}
-
 void PredatorSimulator::stepSimulation()
 {
 	mGraphicsScene.advance();
@@ -195,6 +198,7 @@ void PredatorSimulator::actOfGod()
 	//Itérer à travers les objets et vérifier les prédateurs
 	foreach(QGraphicsItem *item, sceneItems) {
 		if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
+			// L'act of god gèle les prédateurs pendant le temps défini
 			predatorObj->setFrozen(sActOfGodFreezeTime);
 		}
 	}

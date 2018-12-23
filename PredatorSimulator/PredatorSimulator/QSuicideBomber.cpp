@@ -1,4 +1,5 @@
 #include "QSuicideBomber.h"
+
 #include <QtMath>
 #include <QPainter>
 
@@ -6,11 +7,12 @@ QSuicideBomber::QSuicideBomber(QPointF const & initialPosition, qreal initialOri
 	: QDynamicObject(initialSpeed, brush, parent),
 	  mDamage{ damage }
 {
+	 // Initialisation de la forme
 	mShape << QPointF(0, 0)
 		<< QPointF(-0.25, 0.5)
 		<< QPointF(1, 0)
 		<< QPointF(-0.25, -0.5);
-
+	// Initialisation des attributs
 	setPos(initialPosition);
 	setRotation(initialOrientationDegrees);
 	setScale(scale);
@@ -20,7 +22,8 @@ QSuicideBomber::QSuicideBomber(QPointF const & initialPosition, qreal initialOri
 
 void QSuicideBomber::setDamage(qreal damage)
 {
-	mDamage = qMax(0.0, damage);
+	// Dommage minimum est 1
+	mDamage = qMax(1.0, damage);
 }
 
 void QSuicideBomber::setNextPos(qreal x, qreal y)

@@ -4,6 +4,7 @@
 #include "QDynamicObject.h"
 #include "Attributes.h"
 
+// La classe QRunner est un objet dynamique de l'écosystème qui inflige du dommage aux prédateurs
 class QSuicideBomber : public QDynamicObject<QPolygonF>
 {
 public:
@@ -29,9 +30,10 @@ public:
 	// Fonction virtuelle de QGraphicsItem (peut être "overridée") : fait un tick de simulation
 	void advance(int phase) override;
 
-private:
+protected:
 	// Le dommage (influence la grosseur d'un QPredator)
 	qreal mDamage;
+private:
 	// La prochaine position
 	Attributes mNextAttributes;
 };

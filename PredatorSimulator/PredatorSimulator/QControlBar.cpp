@@ -236,7 +236,7 @@ void QControlBar::updateGui()
 	mPauseButton->setText(mState == State::Pause ? mResumeText : mPauseText);
 	mPauseButton->setEnabled(mState == State::Active || mState == State::Pause);
 
-	mStepButton->setEnabled(mState != State::Active);
+	mStepButton->setEnabled(mState == State::Pause);
 
 	mStateMarkerColorBox->set(QBrush(mStateColor[static_cast<int>(mState)]));
 	mStateMarkerColorBox->update();

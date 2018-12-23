@@ -20,11 +20,10 @@ class PredatorSimulator : public QMainWindow
 public:
 	PredatorSimulator(QWidget *parent = Q_NULLPTR);
 
-	QSize sceneSize() const;
-
 private:
 	Ui::PredatorSimulatorClass ui;
 
+	// Les éléments graphiques de la simulation
 	QGraphicsScene mGraphicsScene;
 	QGraphicsView * mSimulationView;
 	QParameters * mParametersQRunners;
@@ -33,7 +32,9 @@ private:
 	QControlBar * mControlBar;
 	QPushButton * mActOfGod;
 
+	// Timer
 	QTimer mTimer;
+	// L'écosystème associé à la simulation
 	QEcosystem * mEcosystem;
 
 	// Les constantes de la simulation

@@ -10,13 +10,16 @@ public:
 	QEcosystem(QSize spawnSize, unsigned int timerInterval, unsigned int timeAlive = 0, QPointF const & sceneCenter = QPointF(),
 			   qreal width = 0, qreal height = 0, QBrush const & brush = Qt::darkBlue, QGraphicsItem * parent = nullptr);
 
-	// Mutateur
-	unsigned int timeAlive();
+	// Accesseurs
+	unsigned int timeAlive() const;
+	unsigned int evolveTime() const;
+
+	// Mutateurs
+	void resetTimeAlive();
+	void setEvolveTime(unsigned int time);
 
 	// Incrémentation du temps de vie de l'écosystème
 	void tick();
-	// Actions d'évolution
-	void evolve();
 
 	// Fonction abstraite de QGraphicsItem (DOIT être "overridée") : retourne la taille de l'item
 	QRectF boundingRect() const override;

@@ -22,13 +22,29 @@ QEcosystem::QEcosystem(QSize spawnSize, unsigned int timerInterval, unsigned int
 	  mEvolveTime{ timerInterval },
 	  mSpawnSize { spawnSize }
 {
+	// Initialisation de la forme et position
 	mShape.setRect(sceneCenter.x() - width / 2, sceneCenter.y() - height / 2, width, height);
 	setPos(sceneCenter);
 }
 
-unsigned int QEcosystem::timeAlive()
+unsigned int QEcosystem::timeAlive() const
 {
 	return mTimeAlive;
+}
+
+unsigned int QEcosystem::evolveTime() const
+{
+	return mEvolveTime;
+}
+
+void QEcosystem::resetTimeAlive()
+{
+	mTimeAlive = 0;
+}
+
+void QEcosystem::setEvolveTime(unsigned int time)
+{
+	mEvolveTime = time;
 }
 
 void QEcosystem::tick()
@@ -51,7 +67,7 @@ void QEcosystem::paint(QPainter * painter, const QStyleOptionGraphicsItem * opti
 void QEcosystem::advance(int phase)
 {
 	if (phase == 0) {
-		//met à jour mTimeAlive
+		// Mettre à jour mTimeAlive
 		tick();
 		// Récupérer les items qui font parti de l'écosystème (dans la scène)
 		QList<QGraphicsItem *> sceneItems = scene()->items();
@@ -90,8 +106,5 @@ void QEcosystem::advance(int phase)
 						Qt::white)); // couleur
 			}
 		}
-	}
-	else if (phase == 1) {
-
 	}
 }

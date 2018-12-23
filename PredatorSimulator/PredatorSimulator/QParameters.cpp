@@ -1,6 +1,5 @@
 #include "QParameters.h"
 
-
 #include <QSpinBox>
 #include <QFormLayout>
 #include <QtMath>
@@ -12,13 +11,16 @@ QParameters::QParameters(size_t maxItems, QString nom, QWidget * parent)
 {
 	const size_t minMaxNbr{ 5 };
 
+	mNbrOfItems->setFixedWidth(50);
 	mNbrOfItems->setRange(1, qMax(static_cast<size_t>(minMaxNbr), maxItems));
 	mNbrOfItems->setValue(minMaxNbr);
 
+	QHBoxLayout * horizLayout{ new QHBoxLayout };
 	QFormLayout * layout{ new QFormLayout };
 	layout->addRow(nom, mNbrOfItems);
-	
-	setLayout(layout);
+	horizLayout->setAlignment(Qt::AlignRight);
+	horizLayout->addLayout(layout);
+	setLayout(horizLayout);
 }
 
 size_t QParameters::nbrOfItems() const

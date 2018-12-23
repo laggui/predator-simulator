@@ -12,9 +12,6 @@ class QBasicItem : public QGraphicsItem
 public:
 	QBasicItem(QBrush const & brush, QGraphicsItem * parent = nullptr) : QGraphicsItem(parent), mBrush{ brush } {}
 
-	//QBrush getBrushColor(); fonction existe deja : const QColor &QBrush::color() const // pas bien defini ??
-	//Returns the brush color
-
 	// Mutateur de couleur
 	void setColor(QBrush const & brush) { mBrush = brush; }
 

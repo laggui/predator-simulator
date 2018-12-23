@@ -4,7 +4,7 @@
 #include <QtGlobal>
 #include <QColor>
 
-// Fonctions utilitaires de génération de valeurs aléatoires : devraient être ailleurs.
+// Fonctions utilitaires de génération de valeurs aléatoires
 double random(qreal maxValue);
 int random(int maxValue);
 double random(qreal minValue, qreal maxValue);

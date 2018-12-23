@@ -4,10 +4,10 @@
 #include "QDynamicObject.h"
 #include "Attributes.h"
 
+// La classe QRunner est un objet dynamique de l'écosystème
 class QRunner : public QDynamicObject<QRectF>
 {
 public:
-	// TO-DO: constructeur avec des paramètres (par défaut)
 	QRunner(QPointF const & initialPosition = QPointF(), qreal initialOrientationDegrees = 0.0, qreal initialSpeed = 1.0, qreal scale = 1.0,
 			quint8 initialHealth = 3, QBrush const & brush = Qt::green, QGraphicsItem * parent = nullptr);
 	// Constructeur de copie
@@ -37,13 +37,14 @@ public:
 	// Fonction virtuelle de QGraphicsItem (peut être "overridée") : fait un tick de simulation
 	void advance(int phase) override;
 
-private:
+protected:
 	// Les points de vie
 	quint8 mHealthPoints;
 	// La grosseur
 	qreal mSize;
 	// Le temps d'immunisation
 	quint8 mImmuneTime;
+private:
 	// Les prochains attributs
 	RunnerAttributes mNextAttributes;
 };

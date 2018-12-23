@@ -5,15 +5,13 @@
 #include "QSuicideBomber.h"
 #include <QPainter>
 
-
-
 QWall::QWall(QPointF const & topLeft, qreal width, qreal height, qreal orientation, QBrush const & brush, QGraphicsItem * parent)
 	: QBasicItem(brush, parent)
 {
-	
-		mWallOrientation = orientation;
-		mShape.setRect(-width / 2, -height / 2, width, height);
-		setPos(topLeft.x() + width / 2, topLeft.y() + height / 2);
+	// Initialisation du mur
+	mWallOrientation = orientation;
+	mShape.setRect(-width / 2, -height / 2, width, height);
+	setPos(topLeft.x() + width / 2, topLeft.y() + height / 2);
 	
 }
 
@@ -35,7 +33,7 @@ void QWall::advance(int phase)
 		// Récupérer les items qui sont en collision
 		QList<QGraphicsItem *> collidingObjects = collidingItems();
 
-		// Itérer à travers les objets en collision
+		// Itérer à travers les objets en collision et bounce
 		foreach(QGraphicsItem *item, collidingObjects) {
 			if (auto predatorObj = dynamic_cast<QPredator*>(item)) {
 				predatorObj->bounce(mWallOrientation);
@@ -47,8 +45,5 @@ void QWall::advance(int phase)
 				bomberObj->bounce(mWallOrientation);
 			}
 		}
-	}
-	else if (phase == 1) {
-		// do nothing
 	}
 }

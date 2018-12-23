@@ -24,6 +24,7 @@ public:
 
 
 protected:
+	// Orientation du mur
 	qreal mWallOrientation;
 };
 
