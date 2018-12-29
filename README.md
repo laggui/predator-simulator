@@ -1,8 +1,10 @@
 # predator-simulator
 
+Projet dans le cadre du cours de conception et analyse orientée objet.
+
 ## À PRENDRE EN CONSIDÉRATION QUAND VOUS "PULLEZ" LES CHANGEMENTS DU PROJET
 
-Il semble y avoir un léger "fuck" avec la compatibilité du projet sur différentes machines. En gros, deux problèmes peuvent causer des problèmes à la compilation:
+Il semble y avoir un léger problème avec la compatibilité du projet sur différentes machines. En gros, deux problèmes peuvent causer des problèmes à la compilation:
 - Version SDK du projet. On a peut-être des versions différentes, donc changer dans les propriétés du projet: (right-click sur le projet) Properties > Configuration Properties > General > Windows SDK Version: sélectionnez la vôtre.
 - Propriétés Qt.
 	- Premièrement, sélectionnez la version de Qt que vous avez pour le projet: (right-click sur le projet) Qt Properties > Properties tab > Version: sélectionnez la vôtre.
@@ -64,7 +66,7 @@ void NotreClasse::advance(int phase)
 		- [x] QSuicideBomber
 	- [x] QEcosytem
 
-- [ ] **Rapport**
-- [ ] **UML** (mettre à jour)
+- [x] **Rapport**
+- [x] **UML**
 
 
